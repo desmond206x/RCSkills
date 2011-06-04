@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.silthus</groupId>
+  <artifactId>RCSkills</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>RCSkills</name>
+  <url>http://github.com/Silthus/RCSkills</url>
+
+  <dependencyManagement>
+  	<dependencies>
+  	</dependencies>
+  </dependencyManagement>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+    	<groupId>com.nijikokun</groupId>
+    	<artifactId>iConomy</artifactId>
+    	<version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>com.nijikokun</groupId>
+    	<artifactId>Permissions</artifactId>
+    	<version>3.1.2</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+ <repository>
+  <id>Permissions</id>
+  <url>https://github.com/TheYeti/Permissions</url>
+ </repository>
+ <repository>
+  <id>Bukkit</id>
+  <url>https://github.com/Bukkit/Bukkit/tree/master/</url>
+ </repository>
+ <repository>
+  <id>iConomy</id>
+  <url>http://mirror.nexua.org/iConomy/Latest%20Build/iConomy.jar</url>
+ </repository>
+</repositories>
+</project>
