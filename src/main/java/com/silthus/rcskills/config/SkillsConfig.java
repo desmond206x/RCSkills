@@ -11,26 +11,17 @@ import org.bukkit.util.config.Configuration;
 import com.silthus.rcskills.RCLogger;
 import com.silthus.rcskills.RCSkills;
 
-public class RCConfig {
+public class SkillsConfig {
 
-	protected static String configFileName = "config.yml";
+	protected static String configFileName = "skills.yml";
 	private static Configuration config = null;
 	private static File configFile;
 	private static RCSkills plugin;
-
-	public static int itemID;
-	public static String itemName;
-	public static int maxLevel;
-	public static boolean useItems;
-
-	public static String track;
-
-	public static boolean useDailyExp;
-	public static int normalExp;
-	public static int vipExp;
+	
+	public static String[] skills;
 
 	public static void initialize(RCSkills instance) {
-		RCConfig.plugin = instance;
+		SkillsConfig.plugin = instance;
 		load();
 	}
 
@@ -50,7 +41,8 @@ public class RCConfig {
 		config = new Configuration(configFile);
 		config.load();
 		if (config.getInt("configversion", 1) < 1) {
-			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + configFileName + "_old");
+			File renameFile = new File(plugin.getDataFolder().getAbsolutePath()
+					+ File.separator + configFileName + "_old");
 			if (renameFile.exists())
 				renameFile.delete();
 			configFile.renameTo(renameFile);
@@ -59,7 +51,7 @@ public class RCConfig {
 			config = new Configuration(configFile);
 			config.load();
 		}
-		RCConfig.setup(config);
+		setup(config);
 	}
 
 	private static boolean createNew(File configFile) {
@@ -84,16 +76,20 @@ public class RCConfig {
 	}
 
 	private static void setup(Configuration file) {
-		RCConfig.itemID = file.getInt("Item ID", 19);
-		RCConfig.itemName = file.getString("Item Name", "Sponge");
-		RCConfig.maxLevel = file.getInt("maxLevel", 25);
-		RCConfig.useItems = file.getBoolean("useItems", false);
-
-		RCConfig.track = file.getString("Permissions.track", "level");
-
-		RCConfig.useDailyExp = file.getBoolean("DailyExp.giveDailyExp", false);
-		RCConfig.normalExp = file.getInt("DailyExp.normalExp", 20);
-		RCConfig.vipExp = file.getInt("DailyExp.vipExp", 40);
+		Object[] obl = file.getList("skills").toArray();
+		int len = obl.length;
+		String[] skills = {};
+		for (int i = 0; i < len; i++) {
+			skills[i] = (String) obl[i];
+		}
+		SkillsConfig.skills = skills;
 	}
-
+	
+	public static SingleSkill getSingleSkill(String skillName) {
+		for (int i = 0; i < SkillsConfig.skills.length; i++) {
+			if (skillName.equalsIgnoreCase(SkillsConfig.skills[i]))
+				return new SingleSkill(SkillsConfig.skills[i], config);
+		}
+		return null;
+	}
 }

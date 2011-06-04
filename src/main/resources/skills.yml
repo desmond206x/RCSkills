@@ -1,0 +1,17 @@
+skills:
+    # The name of the skill for the database. No spaces!
+    SkillName:
+        # A short name for the skill. Can contain spaces.
+        name: Kaboom
+        # A description of the skill.
+        description: Makes a loud kaboooooom!
+        # In what Permissions group is the skill defined?
+        group: kaboom
+        # Requirements for the skill
+        requires:
+            # At what level can a player get this skill?
+            level: 5
+            # How many skillpoints are needed for this skill?
+            skillpoints: 1
+            # How much of whatever your currency is costs this skill?
+            costs: 1000

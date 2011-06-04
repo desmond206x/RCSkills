@@ -16,7 +16,7 @@ import com.avaje.ebean.validation.NotNull;
  * 
  */
 @Entity()
-@Table(name = "levelup")
+@Table(name = "rcs_level")
 public class DBLevelup {
 
 	@Id
@@ -28,6 +28,9 @@ public class DBLevelup {
 	private int exp;
 	private int expToNextLevel;
 	private String joined;
+	private int skillpoints;
+	private int skillCount;
+	private int skillResetCount;
 
 	public void setId(int id) {
 		this.id = id;
@@ -83,5 +86,29 @@ public class DBLevelup {
 
 	public String getJoined() {
 		return joined;
+	}
+
+	public void setSkillpoints(int skillpoints) {
+		this.skillpoints = skillpoints;
+	}
+
+	public int getSkillpoints() {
+		return skillpoints;
+	}
+
+	public void setSkillCount(int skillCount) {
+		this.skillCount = skillCount;
+	}
+
+	public int getSkillCount() {
+		return skillCount;
+	}
+
+	public void setSkillResetCount(int skillResetCount) {
+		this.skillResetCount = skillResetCount;
+	}
+
+	public int getSkillResetCount() {
+		return skillResetCount;
 	}
 }
