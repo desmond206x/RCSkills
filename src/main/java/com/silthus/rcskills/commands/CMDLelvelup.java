@@ -40,6 +40,7 @@ public class CMDLelvelup implements CommandExecutor {
 				if (player == sender
 						&& RCPermissions.permission(player, "lvlup.use", false)) {
 					RCPlayer p = new RCPlayer(player);
+					p.checkForItems();
 					if (p.lvlup(false)) {
 						Messaging.sendMessage(sender,
 								"Du bist nun Level " + p.getLevel());

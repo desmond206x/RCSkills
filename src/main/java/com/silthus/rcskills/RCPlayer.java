@@ -199,12 +199,16 @@ public class RCPlayer {
 	 * @return joinedToday?
 	 * @throws ParseException
 	 */
-	public boolean joinedToday() {
+	public boolean hasJoinedToday() {
 		if (ExtraFunctions.getDate().equalsIgnoreCase(getLastJoinDate())) {
 			return true;
 		} else {	
 			return false;
 		}
+	}
+	
+	public void setJoinedToday() {
+		this.lastJoinDate = ExtraFunctions.getDate();
 	}
 	
 	
@@ -240,7 +244,7 @@ public class RCPlayer {
 				exp += s.getAmount();
 			exp = 2304 - exp;
 			addExp(exp);
-			Messaging.sendMessage(player, "Deine "+ ChatColor.YELLOW + exp + ChatColor.WHITE
+			Messaging.sendMessage(player, "Deine "+ ChatColor.YELLOW + exp + " " + ChatColor.WHITE
 					+ RCConfig.itemName + " wurden gegen EXP eingetauscht.");
 			return true;
 		}
@@ -314,7 +318,7 @@ public class RCPlayer {
 					+ getLevel());
 			Messaging.sendMessage(player, "Dir wurden "
 					+ ChatColor.YELLOW + getExpToNextLevel()
-					+ " Schwämme abgezogen.");
+					+ " EXP abgezogen.");
 			Messaging.sendMessage(this.server, player.getName() + " ist nun Level " + ChatColor.YELLOW
 					+ getLevel());
 			RCLogger.info("[LevelUP] " + player.getName() + " ist nun Level "

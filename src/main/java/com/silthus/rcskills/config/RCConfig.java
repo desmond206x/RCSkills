@@ -81,9 +81,9 @@ public class RCConfig {
 
 		RCConfig.track = file.getString("Permissions.track", "level");
 
-		RCConfig.useDailyExp = file.getBoolean("DailyEXP.giveDailyExp", false);
-		RCConfig.normalExp = file.getInt("DailyEXP.normalExp", 20);
-		RCConfig.vipExp = file.getInt("DailyEXP.vipExp", 40);
+		RCConfig.useDailyExp = file.getBoolean("DailyExp.giveDailyExp", false);
+		RCConfig.normalExp = file.getInt("DailyExp.normalExp", 20);
+		RCConfig.vipExp = file.getInt("DailyExp.vipExp", 40);
 	}
 
 }

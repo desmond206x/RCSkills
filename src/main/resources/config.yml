@@ -15,10 +15,10 @@ Permissions:
     track: level
 
 # Config for the daily login bonus.
-DailyEXP:
+DailyExp:
     # Set to true if you want to give players a daily exp bonus on their first login.
     giveDailyExp: false
     # How many EXP should players with lvlup.exp.normal get?
-    normalEXP: 20
+    normalExp: 20
     # How many EXP should players with lvlup.exp.vip get?
-    vipEXP: 40
+    vipExp: 40
