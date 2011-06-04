@@ -37,8 +37,6 @@ public class RCPlayer {
 	private DBLevelup lvldb = null;
 	private List<DBSkills> skills = null;
 
-	// private Skills skillsdb = null;
-
 	public static void initialize(RCSkills instance) {
 		RCPlayer.plugin = instance;
 	}
