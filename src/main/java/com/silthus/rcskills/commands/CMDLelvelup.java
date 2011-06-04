@@ -38,7 +38,7 @@ public class CMDLelvelup implements CommandExecutor {
 				handled = true;
 				this.player = getPlayerOfSender(sender);
 				if (player == sender
-						&& RCPermissions.permission(player, "lvlup.use", false)) {
+						&& RCPermissions.permission(player, "lvlup.use")) {
 					RCPlayer p = new RCPlayer(player);
 					p.checkForItems();
 					if (p.lvlup(false)) {
@@ -73,7 +73,7 @@ public class CMDLelvelup implements CommandExecutor {
 					if (RCPermissions.isAdmin(getPlayerOfSender(sender))
 							|| RCPermissions.permission(
 									getPlayerOfSender(sender),
-									"lvlup.admin.use", false)) {
+									"lvlup.admin.use")) {
 						this.player = getPlayer(sender, args, 1);
 						RCPlayer p = new RCPlayer(player);
 						if (p.lvlup(true)) {
@@ -95,8 +95,7 @@ public class CMDLelvelup implements CommandExecutor {
 					handled = true;
 					if (isPlayer(sender)
 							&& RCPermissions.permission(
-									getPlayerOfSender(sender), "lvlup.cmd.top",
-									getPlayerOfSender(sender).isOp())) {
+									getPlayerOfSender(sender), "lvlup.cmd.top")) {
 						this.player = getPlayerOfSender(sender);
 						if (args.length == 1) {
 							getTopList(5);
@@ -113,8 +112,7 @@ public class CMDLelvelup implements CommandExecutor {
 						if (args.length == 1
 								&& RCPermissions.permission(
 										getPlayerOfSender(sender),
-										"lvlup.cmd.exp",
-										getPlayerOfSender(sender).isOp())) {
+										"lvlup.cmd.exp")) {
 							this.player = getPlayerOfSender(sender);
 							RCPlayer p = new RCPlayer(player);
 							Messaging.sendMessage(
@@ -131,8 +129,7 @@ public class CMDLelvelup implements CommandExecutor {
 						} else if (args.length == 2
 								&& RCPermissions.permission(
 										getPlayerOfSender(sender),
-										"lvlup.admin.exp",
-										getPlayerOfSender(sender).isOp())) {
+										"lvlup.admin.exp")) {
 							this.player = getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
 							Messaging.sendMessage(

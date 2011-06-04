@@ -44,7 +44,6 @@ public class RCPlayer {
 		loadDatabase();
 		// Load the stats of player
 		loadStats();
-		
 	}
 	
 	private void loadStats() {
@@ -200,11 +199,7 @@ public class RCPlayer {
 	 * @throws ParseException
 	 */
 	public boolean hasJoinedToday() {
-		if (ExtraFunctions.getDate().equalsIgnoreCase(getLastJoinDate())) {
-			return true;
-		} else {	
-			return false;
-		}
+		return lastJoinDate.equals(ExtraFunctions.getDate());
 	}
 	
 	public void setJoinedToday() {
@@ -314,7 +309,7 @@ public class RCPlayer {
 	 */
 	public void checkLevelUP() {
 		if (lvlup(false)) {
-			Messaging.sendMessage(player, "Du bist nun Level "
+			Messaging.sendMessage(player, "Du bist nun Level " + ChatColor.YELLOW
 					+ getLevel());
 			Messaging.sendMessage(player, "Dir wurden "
 					+ ChatColor.YELLOW + getExpToNextLevel()

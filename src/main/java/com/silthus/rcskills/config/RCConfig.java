@@ -14,6 +14,7 @@ import com.silthus.rcskills.RCSkills;
 public class RCConfig {
 
 	private static final String configFileName = "config.yml";
+	private static Configuration config = null;
 	private static File configFile;
 	private static RCSkills plugin;
 
@@ -43,11 +44,21 @@ public class RCConfig {
 		configFile = new File(plugin.getDataFolder().getAbsolutePath()
 				+ File.separator + configFileName);
 
-		Configuration config = new Configuration(configFile);
-
 		if (!configFile.exists()) {
 			createNew(configFile);
 			RCLogger.warning("No config found! Creating new one...");
+		}
+		config = new Configuration(configFile);
+		config.load();
+		if (config.getInt("configversion", 1) < 1) {
+			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + configFileName + "_old");
+			if (renameFile.exists())
+				renameFile.delete();
+			configFile.renameTo(renameFile);
+			createNew(configFile);
+			RCLogger.warning("Old config found! Renaming and creating new one...");
+			config = new Configuration(configFile);
+			config.load();
 		}
 		setup(config);
 	}
@@ -68,7 +79,7 @@ public class RCConfig {
 			out.close();
 			return true;
 		} catch (IOException iex) {
-			RCLogger.error("Could not create config file! Aborting...");
+			RCLogger.warning("Could not create config file! Aborting...");
 			return false;
 		}
 	}

@@ -5,11 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import com.iConomy.util.Messaging;
 import com.silthus.rcskills.RCPermissions;
 import com.silthus.rcskills.RCPlayer;
 import com.silthus.rcskills.RCSkills;
 import com.silthus.rcskills.config.RCConfig;
+import com.silthus.rcskills.extras.Messaging;
 
 public class RCPlayerListener extends PlayerListener {
 	@SuppressWarnings("unused")
@@ -32,10 +32,10 @@ public class RCPlayerListener extends PlayerListener {
 		if (RCConfig.useDailyExp == true) {
 			// need to check for vip permissions first
 			if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "lvlup.exp.vip", false)) {
+					&& RCPermissions.permission(player, "lvlup.exp.vip")) {
 				// adds the daily ration vip exp
 				p.addExp(RCConfig.vipExp);
-				Messaging.send(player,
+				Messaging.sendMessage(player,
 						"Du hast soeben deine tägliche Ration von "
 								+ ChatColor.YELLOW + RCConfig.vipExp
 								+ ChatColor.WHITE + " EXP bekommen.");
@@ -43,11 +43,10 @@ public class RCPlayerListener extends PlayerListener {
 				// checks for lvlup after the player got exp
 				p.checkLevelUP();
 			} else if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "lvlup.exp.normal",
-							true)) {
+					&& RCPermissions.permission(player, "lvlup.exp.normal")) {
 				// adds the daily ration exp
 				p.addExp(RCConfig.normalExp);
-				Messaging.send(player,
+				Messaging.sendMessage(player,
 						"Du hast soeben deine tägliche Ration von "
 								+ ChatColor.YELLOW + RCConfig.normalExp
 								+ ChatColor.WHITE + " EXP bekommen.");

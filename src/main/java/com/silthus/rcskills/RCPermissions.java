@@ -43,14 +43,12 @@ public class RCPermissions {
 		}
 	}
 
-	public static boolean permission(Player player, String permission, boolean bool) {
-		if (bool == true)
-			return true;
+	public static boolean permission(Player player, String permission) {
 		return RCPermissions.permissionsHandler.has(player, permission);
 	}
 
 	public static boolean isAdmin(Player player) {
-		return permission(player, "basic.admin", player.isOp());
+		return permission(player, "basic.admin");
 	}
 
 	public static String getPrimaryGroup(Player player) {
