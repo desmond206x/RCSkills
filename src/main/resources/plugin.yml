@@ -16,3 +16,6 @@ commands:
            Example: /<command> | Takes you to the next Level
            Example: /<command> top | Shows the Top 5 leveled Players
            Example: /<command> exp | Shows your current EXP
+    rcs:
+        aliases: [rcskills]
+        description: blubb

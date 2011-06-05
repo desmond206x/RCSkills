@@ -9,6 +9,10 @@ Item ID: 19
 Item Name: Sponge
 # What is the max Level a player can get?
 maxLevel: 25
+# In what intervall shall we grant skillponts?
+Skillpoints Interval: 5
+# How many skillpoints shall we give them?
+Skillpoints: 1
 
 Permissions:
     # Whats the name of the Permissions track your levels are on?

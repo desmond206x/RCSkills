@@ -17,9 +17,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.silthus.rcskills.commands.CMDLelvelup;
+import com.silthus.rcskills.commands.CMDrcs;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SkillsConfig;
 import com.silthus.rcskills.database.DBLevelup;
+import com.silthus.rcskills.database.DBSkills;
 import com.silthus.rcskills.extras.CommandManager;
 import com.silthus.rcskills.listeners.RCPlayerListener;
 import com.silthus.rcskills.listeners.RCPluginListener;
@@ -61,6 +63,7 @@ public class RCSkills extends JavaPlugin {
 
 		// Supported plugins
 		RCPermissions.initialize(this);
+		RCEconomy.initialize();
 
 		// Commands
 		setupCommands();
@@ -79,6 +82,7 @@ public class RCSkills extends JavaPlugin {
 		// Make your commands in the template.commands package. Each command is
 		// a seperate class.
 		addCommand("lvlup", new CMDLelvelup(this));
+		addCommand("rcs", new CMDrcs(this));
 	}
 
 	/*
@@ -108,6 +112,10 @@ public class RCSkills extends JavaPlugin {
 	private void addCommand(String command, CommandExecutor executor) {
 		getCommand(command).setExecutor(executor);
 		commandManager.addCommand(command, executor);
+	}
+	
+	public CommandManager getCommandManager() {
+		return this.commandManager;
 	}
 
 	public void onDisable() {
@@ -142,6 +150,7 @@ public class RCSkills extends JavaPlugin {
 	private void setupDatabase() {
         try {
             getDatabase().find(DBLevelup.class).findRowCount();
+            getDatabase().find(DBSkills.class).findRowCount();
         } catch (PersistenceException ex) {
             RCLogger.info("Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();
@@ -151,6 +160,7 @@ public class RCSkills extends JavaPlugin {
     public List<Class<?>> getDatabaseClasses() {
         List<Class<?>> list = new ArrayList<Class<?>>();
         list.add(DBLevelup.class);
+        list.add(DBSkills.class);
         return list;
     }
 

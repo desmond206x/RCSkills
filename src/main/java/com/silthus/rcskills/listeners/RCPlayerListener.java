@@ -28,6 +28,8 @@ public class RCPlayerListener extends PlayerListener {
 		// TODO: make configurable in config
 		if (p.checkForItems()) {
 			p.checkLevelUP();
+		} else if (p.hasExpForLevel(p.getLevel() + 1)) {
+			p.checkLevelUP();
 		}
 		if (RCConfig.useDailyExp == true) {
 			// need to check for vip permissions first

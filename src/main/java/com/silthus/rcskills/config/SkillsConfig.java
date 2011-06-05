@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.bukkit.util.config.Configuration;
 
@@ -19,6 +20,7 @@ public class SkillsConfig {
 	private static RCSkills plugin;
 	
 	public static String[] skills;
+	public static List<String> skillsList;
 
 	public static void initialize(RCSkills instance) {
 		SkillsConfig.plugin = instance;
@@ -76,13 +78,13 @@ public class SkillsConfig {
 	}
 
 	private static void setup(Configuration file) {
-		Object[] obl = file.getList("skills").toArray();
-		int len = obl.length;
-		String[] skills = {};
-		for (int i = 0; i < len; i++) {
-			skills[i] = (String) obl[i];
-		}
-		SkillsConfig.skills = skills;
+
+		skillsList = file.getKeys("skills");
+		SkillsConfig.skills = new String[skillsList.size()];
+		
+		for(int i=0; i < skillsList.size(); i++){
+            SkillsConfig.skills[i] = skillsList.get(i);
+        }
 	}
 	
 	public static SingleSkill getSingleSkill(String skillName) {

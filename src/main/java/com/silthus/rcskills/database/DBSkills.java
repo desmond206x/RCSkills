@@ -20,7 +20,7 @@ public class DBSkills {
 	@Length(max = 32)
 	private String playerName;
 	private String skillName;
-	private String group;
+	private String groupName;
 	private int costs;
 	private int skillPoints;
 	private int skillLevel;
@@ -53,11 +53,11 @@ public class DBSkills {
 	public String getSkillName() {
 		return skillName;
 	}
-	public void setGroup(String group) {
-		this.group = group;
+	public void setGroupName(String group) {
+		this.groupName = group;
 	}
-	public String getGroup() {
-		return group;
+	public String getGroupName() {
+		return groupName;
 	}
 	public void setCosts(int costs) {
 		this.costs = costs;

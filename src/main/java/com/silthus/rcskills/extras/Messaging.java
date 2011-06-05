@@ -9,6 +9,21 @@ import com.silthus.rcskills.RCSkills;
 
 public class Messaging {
 	
+	public static void sendNoTag(Player player, String message) {
+        player.sendMessage(message);
+    }
+	
+	public static void sendNoTag(CommandSender sender, String message) {
+        if (isPlayer(sender)) {
+            Player player = (Player) sender;
+            player.sendMessage(message);
+        }
+    }
+	
+	public static void sendNoTag(Server server, String message) {
+        server.broadcastMessage(message);
+    }
+	
 	public static void sendMessage(Player player, String message) {
         player.sendMessage(getTag() + message);
     }
@@ -24,9 +39,30 @@ public class Messaging {
         server.broadcastMessage(getTag() + message);
     }
 	
+	public static void sendMessage(String tag, Player player, String message) {
+        player.sendMessage(getDiffrentTag(tag) + message);
+    }
+	
+	public static void sendMessage(String tag, CommandSender sender, String message) {
+        if (isPlayer(sender)) {
+            Player player = (Player) sender;
+            player.sendMessage(getDiffrentTag(tag) + message);
+        }
+    }
+	
+	public static void sendMessage(String tag, Server server, String message) {
+        server.broadcastMessage(getDiffrentTag(tag) + message);
+    }
+	
 	private static boolean isPlayer(CommandSender sender){
         return sender instanceof Player;
     }
+	
+	private static String getDiffrentTag(String tag) {
+		String s = null;
+		s = "[" + colorizeText(tag, ChatColor.GREEN) + "] ";
+		return s;
+	}
     
     private static String getTag() {
     	String s = null;
