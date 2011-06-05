@@ -16,7 +16,6 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.silthus.rcskills.commands.CMDLelvelup;
 import com.silthus.rcskills.commands.CMDrcs;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SkillsConfig;
@@ -81,7 +80,6 @@ public class RCSkills extends JavaPlugin {
 		// both is "basic".
 		// Make your commands in the template.commands package. Each command is
 		// a seperate class.
-		addCommand("lvlup", new CMDLelvelup(this));
 		addCommand("rcs", new CMDrcs(this));
 	}
 

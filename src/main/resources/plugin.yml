@@ -1,21 +1,18 @@
 name: RCSkills
 main: com.silthus.rcskills.RCSkills
-version: 1.5
+version: 2.0
 database: true
 authors:
   - Silthus
 website: www.raid-craft.de
 description: >
-             Provides an Level and EXP System based on Groups
+             Provides an Level, Skills and EXP System based on Groups
 commands:
-    lvlup:
-        aliases: [lvl, levelup]
-        description: Makes it possible for Players to LevelUP.
+    rcs:
+        aliases: [lvlup]
+        description: The RaidCraft Server plugin.
         usage: |
            /<command>
-           Example: /<command> | Takes you to the next Level
-           Example: /<command> top | Shows the Top 5 leveled Players
-           Example: /<command> exp | Shows your current EXP
-    rcs:
-        aliases: [rcskills]
-        description: blubb
+           Example: /<command> | Shows you your basic stats
+           Example: /<command> lvl | Takes you to the next level
+           Example: /<command> skills | Lists all skills you can buy

@@ -23,6 +23,17 @@ public class CMDrcs implements CommandExecutor {
 	private Player player = null;
 	private CommandManager cmd = null;
 
+	private String[] help = {
+			"/rcs - Übersicht über alle Stats",
+			"/rcs lvl - Bringt dich zum nächsten Level",
+			"/rcs skills - Zeigt alle kaufbaren Skills an",
+			"/rcs myskills - Zeigt alle gekauften Skills an",
+			"/rcs info <SkillName> - Zeigt dir Informationen zu 'SkillName'",
+			"/rcs buy <SkillName> - Kauft den Skill 'SkillName' (CaseSensitiv)",
+			"/rcs reset - Resetet alle deine Skills gegen Coins",
+			"/rcs top - Zeigt dir die Top fünf Spieler des Servers an",
+			"/rcs exp - Zeigt dir deine EXP an" };
+
 	public CMDrcs(RCSkills instance) {
 		CMDrcs.plugin = instance;
 	}
@@ -85,9 +96,9 @@ public class CMDrcs implements CommandExecutor {
 				}
 			} else if (cmd.is(args[0], "player")) {
 				if (args.length == 2
-						&& RCPermissions.permission(
-								cmd.getPlayerOfSender(sender),
-								"rcs.admin.info")) {
+						&& RCPermissions
+								.permission(cmd.getPlayerOfSender(sender),
+										"rcs.admin.info")) {
 					RCPlayer p = new RCPlayer(cmd.getPlayer(sender, args, 1));
 					Messaging.sendNoTag(
 							sender,
@@ -392,7 +403,8 @@ public class CMDrcs implements CommandExecutor {
 					handled = true;
 					this.player = cmd.getPlayerOfSender(sender);
 					if (player == sender
-							&& RCPermissions.permission(player, "rcs.player.level")) {
+							&& RCPermissions.permission(player,
+									"rcs.player.level")) {
 						RCPlayer p = new RCPlayer(player);
 						p.checkForItems();
 						if (p.lvlup(false)) {
@@ -525,7 +537,9 @@ public class CMDrcs implements CommandExecutor {
 				if (cmd.is(args[0], "reload")) {
 					handled = true;
 					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(cmd.getPlayerOfSender(sender), "rcs.reload")) {
+							&& RCPermissions
+									.permission(cmd.getPlayerOfSender(sender),
+											"rcs.reload")) {
 						RCConfig.load();
 						SkillsConfig.load();
 						Messaging.sendMessage(
@@ -565,6 +579,43 @@ public class CMDrcs implements CommandExecutor {
 					} else {
 						Messaging.sendMessage(sender,
 								"Du hast nicht die nötigen Rechte dafür!");
+					}
+				}
+				if (cmd.is(args[0], "help") || cmd.is(args[0], "?")) {
+					if (args.length == 1) {
+						Messaging
+								.sendMessage(
+										"Help",
+										sender,
+										"Seite "
+												+ Messaging.colorizeText(
+														"" + 1,
+														ChatColor.YELLOW)
+												+ " von "
+												+ Messaging.colorizeText(
+														""
+																+ ExtraFunctions
+																		.getPages(help),
+														ChatColor.YELLOW));
+						ExtraFunctions.listPage(help,
+								cmd.getPlayerOfSender(sender), 1);
+					} else if (args.length == 2) {
+						Messaging
+						.sendMessage(
+								"Help",
+								sender,
+								"Seite "
+										+ Messaging.colorizeText(
+												"" + args[1],
+												ChatColor.YELLOW)
+										+ " von "
+										+ Messaging.colorizeText(
+												""
+														+ ExtraFunctions
+																.getPages(help),
+												ChatColor.YELLOW));
+						ExtraFunctions.listPage(help,
+								cmd.getPlayerOfSender(sender), Integer.parseInt(args[1]));
 					}
 				}
 			}
