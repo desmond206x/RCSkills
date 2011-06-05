@@ -11,8 +11,3 @@ commands:
     rcs:
         aliases: [lvlup]
         description: The RaidCraft Server plugin.
-        usage: |
-           /<command>
-           Example: /<command> | Shows you your basic stats
-           Example: /<command> lvl | Takes you to the next level
-           Example: /<command> skills | Lists all skills you can buy

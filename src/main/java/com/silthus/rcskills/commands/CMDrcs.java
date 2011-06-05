@@ -585,7 +585,7 @@ public class CMDrcs implements CommandExecutor {
 					if (args.length == 1) {
 						Messaging
 								.sendMessage(
-										"Help",
+										"RCSkills Help",
 										sender,
 										"Seite "
 												+ Messaging.colorizeText(
@@ -602,7 +602,7 @@ public class CMDrcs implements CommandExecutor {
 					} else if (args.length == 2) {
 						Messaging
 						.sendMessage(
-								"Help",
+								"RCSkills Help",
 								sender,
 								"Seite "
 										+ Messaging.colorizeText(
