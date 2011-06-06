@@ -51,7 +51,7 @@ public class CMDrcs implements CommandExecutor {
 					Messaging.sendNoTag(
 							sender,
 							"##### "
-									+ Messaging.colorizeText("RaidCraft Stats",
+									+ Messaging.colorizeText(RCConfig.title + " Stats",
 											ChatColor.YELLOW) + " #####");
 					// send level
 					Messaging.sendMessage("Level", sender, "Level "

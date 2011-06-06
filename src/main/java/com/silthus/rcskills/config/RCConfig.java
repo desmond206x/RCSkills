@@ -29,6 +29,8 @@ public class RCConfig {
 	public static boolean useDailyExp;
 	public static int normalExp;
 	public static int vipExp;
+	
+	public static String title;
 
 	public static void initialize(RCSkills instance) {
 		RCConfig.plugin = instance;
@@ -50,7 +52,7 @@ public class RCConfig {
 		}
 		config = new Configuration(configFile);
 		config.load();
-		if (config.getInt("configversion", 1) < 1) {
+		if (config.getInt("configversion", 2) < 2) {
 			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + configFileName + "_old");
 			if (renameFile.exists())
 				renameFile.delete();
@@ -96,6 +98,8 @@ public class RCConfig {
 		RCConfig.useDailyExp = file.getBoolean("DailyExp.giveDailyExp", false);
 		RCConfig.normalExp = file.getInt("DailyExp.normalExp", 20);
 		RCConfig.vipExp = file.getInt("DailyExp.vipExp", 40);
+		
+		RCConfig.title = file.getString("title", "RaidCraft");
 	}
 
 }
