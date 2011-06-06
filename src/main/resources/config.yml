@@ -1,6 +1,8 @@
 # Configversion - DO NOT TOUCH!
-configversion: 1
+configversion: 2
 ######################################################
+# Whats the name of your Server?
+title: RaidCraft
 # Set to 0 if you dont want to convert any items
 Item ID: 19
 # The name of the item (only relevant for the chat)
