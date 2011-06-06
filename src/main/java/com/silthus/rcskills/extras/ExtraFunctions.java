@@ -34,39 +34,49 @@ public class ExtraFunctions {
 
 	public static void listPage(List<DBSkills> array, Player player, int page) {
 		if (page != 0) {
-		if (array != null) {
-			if (page == 1) {
-				for (int i = 0; i < 5; i++) {
-					if (!(array.size() <= i))
-						Messaging.sendNoTag(player, array.get(i).getSkillName() + "[" + Messaging.colorizeText("" + i, ChatColor.YELLOW) + "]");
-				}
-			} else {
-				page -= 1;
-				for (int i = page * 5; i < i + 5; i++) {
-					if (!(array.size() <= i))
-						Messaging.sendNoTag(player, array.get(i).getSkillName() + "[" + Messaging.colorizeText("" + i, ChatColor.YELLOW) + "]");
+			if (array != null) {
+				if (page == 1) {
+					for (int i = 0; i < 5; i++) {
+						if (!(array.size() <= i))
+							Messaging.sendNoTag(
+									player,
+									array.get(i).getSkillName()
+											+ "["
+											+ Messaging.colorizeText("" + i,
+													ChatColor.YELLOW) + "]");
+					}
+				} else {
+					page -= 1;
+					for (int i = page * 5; i < i + 5; i++) {
+						if (!(array.size() <= i))
+							Messaging.sendNoTag(
+									player,
+									array.get(i).getSkillName()
+											+ "["
+											+ Messaging.colorizeText("" + i,
+													ChatColor.YELLOW) + "]");
+					}
 				}
 			}
-		}
 		}
 	}
 
 	public static void listPage(String[] array, Player player, int page) {
 		if (page != 0) {
-		if (array != null) {
-			if (page == 1) {
-				for (int i = 0; i < 5; i++) {
-					if (!(array.length <= i))
-						Messaging.sendNoTag(player, array[i]);
-				}
-			} else {
-				page -= 1;
-				for (int i = page * 5; i < i + 5; i++) {
-					if (!(array.length <= i))
-						Messaging.sendNoTag(player, array[i]);
+			if (array != null) {
+				if (page == 1) {
+					for (int i = 0; i < 5; i++) {
+						if (!(array.length <= i))
+							Messaging.sendNoTag(player, array[i]);
+					}
+				} else {
+					page -= 1;
+					for (int i = page * 5; i < i + 5; i++) {
+						if (!(array.length <= i))
+							Messaging.sendNoTag(player, array[i]);
+					}
 				}
 			}
-		}
 		}
 	}
 }

@@ -85,7 +85,7 @@ public class RCPermissions {
 		Group groupToBe = permissionsHandler.getGroupObject(player.getWorld().getName(), group);
 		if (groupToBe == null)
 			return false;
-		userToBe.promote(groupToBe, track);
+		userToBe.promote(groupToBe.toGroupWorld(), track);
 		return true;
 	}
 	
@@ -96,7 +96,7 @@ public class RCPermissions {
 		Group groupToBe = permissionsHandler.getGroupObject(player.getWorld().getName(), group);
 		if (groupToBe == null)
 			return false;
-		userToBe.demote(groupToBe, track);
+		userToBe.demote(groupToBe.toGroupWorld(), track);
 		return true;
 	}
 	

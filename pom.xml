@@ -34,7 +34,7 @@
     <dependency>
     	<groupId>com.nijikokun</groupId>
     	<artifactId>Permissions</artifactId>
-    	<version>3.1.2</version>
+    	<version>3.1.4</version>
     </dependency>
   </dependencies>
   <repositories>
@@ -51,4 +51,6 @@
   <url>http://mirror.nexua.org/iConomy/Latest%20Build/iConomy.jar</url>
  </repository>
 </repositories>
+  <modules>
+  </modules>
 </project>
