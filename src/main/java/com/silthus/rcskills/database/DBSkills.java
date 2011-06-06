@@ -19,7 +19,10 @@ public class DBSkills {
 	@NotNull
 	@Length(max = 32)
 	private String playerName;
+	@NotNull
 	private String skillName;
+	@NotNull
+	private int skillId;
 	private String groupName;
 	private int costs;
 	private int skillPoints;
@@ -76,6 +79,18 @@ public class DBSkills {
 	}
 	public int getSkillLevel() {
 		return skillLevel;
+	}
+	/**
+	 * @param skillId the skillId to set
+	 */
+	public void setSkillId(int skillId) {
+		this.skillId = skillId;
+	}
+	/**
+	 * @return the skillId
+	 */
+	public int getSkillId() {
+		return skillId;
 	}
 	
 }

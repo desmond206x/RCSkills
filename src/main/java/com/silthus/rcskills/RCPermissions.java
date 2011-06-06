@@ -99,4 +99,8 @@ public class RCPermissions {
 		userToBe.demote(groupToBe, track);
 		return true;
 	}
+	
+	public static void saveAll() {
+		permissionsHandler.saveAll();
+	}
 }

@@ -1,9 +1,8 @@
 # Configversion - DO NOT TOUCH!
 configversion: 1
 ######################################################
-# Set to true if you want to use items instead of EXP.
-useitems: false
 # If useitems = true what items should be used?
+# Set to 0 if you dont want to convert any items
 Item ID: 19
 # The name of the item (only relevant for the chat)
 Item Name: Sponge

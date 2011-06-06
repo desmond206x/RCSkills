@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.nijikokun.register.payment.methods.iCo5;
+import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SingleSkill;
 import com.silthus.rcskills.config.SkillsConfig;
@@ -86,7 +87,6 @@ public class RCPlayer {
 			lvldb.setSkillResetCount(0);
 			lvldb.setSkillCount(skills.size());
 			lvldb.setSpendSkillpoints(getSpendSkillpoints());
-			RCPlayer.plugin.getDatabase().save(lvldb);
 		}
 	}
 
@@ -118,7 +118,13 @@ public class RCPlayer {
 	}
 
 	public void setLevel(int level) {
-		this.level = level;
+		String group = "Level" + getLevel();
+		if (RCPermissions.removeParent(player, group)) {
+			this.level = level;
+			group = "Level" + level;
+			RCPermissions.addParent(player, group);
+		}
+
 	}
 
 	public void setExp(int exp) {
@@ -172,11 +178,6 @@ public class RCPlayer {
 
 	public void addSkillPoints(int points) {
 		this.skillPoints += points;
-		Messaging.sendMessage(
-				player,
-				"Du hast soeben "
-						+ Messaging.colorizeText("" + points, ChatColor.YELLOW)
-						+ " Skillpunkte dazubekommen.");
 	}
 
 	public void removeSkillPoints(int points) {
@@ -184,8 +185,11 @@ public class RCPlayer {
 	}
 
 	public boolean grantSkillPoints() {
-		if (getLevel() != 0 && getLevel() % RCConfig.skillpointsInterval == 0)
+		if (getLevel() != 0 && getLevel() % RCConfig.skillpointsInterval == 0) {
+			Messaging.sendMessage(player, "You just got "
+					+ RCConfig.skillPoints + " Skillpoints!");
 			return true;
+		}
 		return false;
 	}
 
@@ -253,38 +257,49 @@ public class RCPlayer {
 		return this.account;
 	}
 
-	public void addSkill(String skillName) {
+	public boolean addSkill(String skillName, boolean removeSkillpoints) {
 		DBSkills skillsdb = new DBSkills();
 		SingleSkill skill = SkillsConfig.getSingleSkill(skillName);
-		skillsdb.setPlayer(player);
-		skillsdb.setSkillName(skillName);
-		skillsdb.setGroupName(skill.getGroup());
-		skillsdb.setCosts(skill.getCosts());
-		skillsdb.setSkillPoints(skill.getSkillpoints());
-		skillsdb.setSkillLevel(skill.getLevel());
-		increaseSkillCount();
-		addSpendSkillpoints(skill.getSkillpoints());
-		removeSkillPoints(skill.getSkillpoints());
-		RCPlayer.plugin.getDatabase().save(skillsdb);
+		if (RCPermissions.addParent(player, skill.getGroup())) {
+			skillsdb.setPlayer(player);
+			skillsdb.setSkillName(skillName);
+			skillsdb.setGroupName(skill.getGroup());
+			skillsdb.setCosts(skill.getCosts());
+			skillsdb.setSkillPoints(skill.getSkillpoints());
+			skillsdb.setSkillLevel(skill.getLevel());
+			increaseSkillCount();
+			if (removeSkillpoints) {
+				addSpendSkillpoints(skill.getSkillpoints());
+				removeSkillPoints(skill.getSkillpoints());
+			}
+			RCPlayer.plugin.getDatabase().save(skillsdb);
+			return true;
+		}
+		return false;
 	}
 
-	public void removeSkill(String skillName) {
+	public boolean removeSkill(String skillName) {
 		DBSkills skillsdb = RCPlayer.plugin.getDatabase().find(DBSkills.class)
 				.where().ieq("skillName", skillName).where()
 				.ieq("playerName", player.getName()).findUnique();
+		if (RCPermissions.removeParent(player, skillsdb.getGroupName())) {
 		decreaseSkillCount();
 		addSkillPoints(skillsdb.getSkillPoints());
 		RCPlayer.plugin.getDatabase().delete(skillsdb);
 		RCPlayer.plugin.getDatabase().save(skillsdb);
+		return true;
+		}
+		return false;
 	}
 
-	public boolean resetSkills() {
+	public boolean resetSkills(boolean removeMoney) {
 		if (skills == null)
 			return false;
 		for (DBSkills s : skills) {
 			removeSkill(s.getSkillName());
 		}
-		this.account.subtract(getResetCost());
+		if (removeMoney == true)
+			this.account.subtract(getResetCost());
 		return true;
 	}
 
@@ -308,7 +323,7 @@ public class RCPlayer {
 		for (String s : SkillsConfig.skills) {
 			if (SkillsConfig.getSingleSkill(s).getLevel() <= getLevel()) {
 				if (!skills.contains(s)) {
-					buyableSkills[i] = s;
+					buyableSkills[i] = s + "[" + Messaging.colorizeText("" + SkillsConfig.getSingleSkill(s).getId(), ChatColor.YELLOW) + "]";
 				}
 				i++;
 			}
@@ -413,9 +428,6 @@ public class RCPlayer {
 			if (grantSkillPoints()) {
 				addSkillPoints(RCConfig.skillPoints);
 			}
-			String group = "Level" + getLevel();
-			RCPermissions.promote(player, RCConfig.track, group); // sets the
-																	// new group
 			return true;
 		}
 		return false;
@@ -467,9 +479,10 @@ public class RCPlayer {
 				exp += s.getAmount();
 			exp = 2304 - exp;
 			addExp(exp);
-			Messaging.sendMessage(player, "Deine " + ChatColor.YELLOW + exp
-					+ " " + ChatColor.WHITE + RCConfig.itemName
-					+ " wurden gegen EXP eingetauscht.");
+			Messaging.sendMessage(player, Language.your + " "
+					+ ChatColor.YELLOW + exp + " " + ChatColor.WHITE
+					+ RCConfig.itemName + " "
+					+ Language.haveBeenExchangedForExp + ".");
 			return true;
 		}
 		return false;
@@ -491,53 +504,34 @@ public class RCPlayer {
 			if (getLevel() == -1 && getExp() != 0)
 				setExp(0);
 			if (getLevel() == -1) {
-				Messaging.sendMessage(player,
-						"Spieler in der Gruppe " + ChatColor.YELLOW
-								+ RCPermissions.getPrimaryGroup(player)
-								+ ChatColor.WHITE + " können nicht leveln.");
+				Messaging.sendMessage(player, Language.cantLevel);
 				return false;
 				// ingore item --> true
 			} else if (nextLevel(true)) {
-				// TODO: Add Skillpoints
 				return true;
 			}
-			Messaging
-					.sendMessage(player,
-							"Du hast bereits das maximal Level von "
-									+ ChatColor.YELLOW + RCConfig.maxLevel
-									+ ChatColor.WHITE + " ereicht.");
+			Messaging.sendMessage(player, Language.reachedMaxLevel);
 			return true;
 		} else {
 			// with item check
 			if (hasExpForLevel(getLevel() + 1)) {
 				if (getLevel() == -1) {
-					Messaging
-							.sendMessage(
-									player,
-									"Spieler in der Gruppe "
-											+ ChatColor.YELLOW
-											+ RCPermissions
-													.getPrimaryGroup(player)
-											+ ChatColor.WHITE
-											+ " können nicht leveln.");
+					Messaging.sendMessage(player, Language.cantLevel);
 					return false;
 				}
 				if (!nextLevel(false)) {
-					Messaging.sendMessage(player,
-							"Du hast bereits das maximal Level von "
-									+ ChatColor.YELLOW + RCConfig.maxLevel
-									+ ChatColor.WHITE + " ereicht.");
+					Messaging.sendMessage(player, Language.reachedMaxLevel);
 					return false;
 				}
 				// TODO: Skillpoints
 				return true;
 			} else {
 				Messaging.sendMessage(player, ChatColor.RED
-						+ "Du hast nicht genügend EXP!");
-				Messaging.sendMessage(player, "Du hast erst "
+						+ Language.youDontHaveEnough + " EXP!");
+				Messaging.sendMessage(player, Language.youOnlyHave + " "
 						+ ChatColor.YELLOW + getExp() + ChatColor.WHITE + "/"
 						+ ChatColor.YELLOW + getExpToNextLevel()
-						+ ChatColor.WHITE + " EXP für das nächste Level");
+						+ ChatColor.WHITE + " EXP " + Language.forTheNextLevel);
 				return false;
 			}
 		}
@@ -548,14 +542,17 @@ public class RCPlayer {
 	 */
 	public void checkLevelUP() {
 		if (lvlup(false)) {
-			Messaging.sendMessage(player, "Du bist nun Level "
+			Messaging.sendMessage(player, Language.youAreNowLevel + " "
 					+ ChatColor.YELLOW + getLevel());
-			Messaging.sendMessage(player, "Dir wurden " + ChatColor.YELLOW
-					+ getExpToNextLevel() + " EXP abgezogen.");
-			Messaging.sendMessage(this.server, player.getName()
-					+ " ist nun Level " + ChatColor.YELLOW + getLevel());
-			RCLogger.info("[LevelUP] " + player.getName() + " ist nun Level "
-					+ getLevel());
+			Messaging.sendMessage(player, Language.youGot + " "
+					+ ChatColor.YELLOW + getExpToNextLevel() + " EXP "
+					+ Language.deducted + ".");
+			Messaging
+					.sendMessage(this.server, player.getName() + " "
+							+ Language.isNowLevel + " " + ChatColor.YELLOW
+							+ getLevel());
+			RCLogger.info("[LevelUP] " + player.getName() + " "
+					+ Language.isNowLevel + " " + getLevel());
 		}
 	}
 

@@ -20,6 +20,7 @@ public class SkillsConfig {
 	private static RCSkills plugin;
 	
 	public static String[] skills;
+	public static int[] skillid;
 	public static List<String> skillsList;
 
 	public static void initialize(RCSkills instance) {
@@ -81,9 +82,11 @@ public class SkillsConfig {
 
 		skillsList = file.getKeys("skills");
 		SkillsConfig.skills = new String[skillsList.size()];
+		SkillsConfig.skillid = new int[skillsList.size()];
 		
 		for(int i=0; i < skillsList.size(); i++){
             SkillsConfig.skills[i] = skillsList.get(i);
+            SkillsConfig.skillid[i] = i;
         }
 	}
 	
@@ -93,5 +96,21 @@ public class SkillsConfig {
 				return new SingleSkill(SkillsConfig.skills[i], config);
 		}
 		return null;
+	}
+	
+	public static SingleSkill getSingleSkill(int id) {
+		for (int i = 0; i < SkillsConfig.skills.length; i++) {
+			if (id == i)
+				return new SingleSkill(id, config);
+		}
+		return null;
+	}
+	
+	public static int getSkillId(String skillName) {
+		for (int i = 0; i < SkillsConfig.skills.length; i++) {
+			if (skillName.equalsIgnoreCase(SkillsConfig.skills[i]))
+				return i;
+		}
+		return -1;
 	}
 }

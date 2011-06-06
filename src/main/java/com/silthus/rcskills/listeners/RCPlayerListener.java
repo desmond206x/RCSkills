@@ -56,8 +56,8 @@ public class RCPlayerListener extends PlayerListener {
 				// checks for lvlup after the player got exp
 				p.checkLevelUP();
 			}
-			// save all changes
-			p.writeDatabase();
 		}
+		// save all changes
+		p.writeDatabase();
 	}
 }

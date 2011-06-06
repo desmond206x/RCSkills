@@ -1,5 +1,7 @@
 package com.silthus.rcskills.commands;
 
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,6 +12,7 @@ import com.silthus.rcskills.RCLogger;
 import com.silthus.rcskills.RCPermissions;
 import com.silthus.rcskills.RCPlayer;
 import com.silthus.rcskills.RCSkills;
+import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SingleSkill;
 import com.silthus.rcskills.config.SkillsConfig;
@@ -23,16 +26,14 @@ public class CMDrcs implements CommandExecutor {
 	private Player player = null;
 	private CommandManager cmd = null;
 
-	private String[] help = {
-			"/rcs - Übersicht über alle Stats",
-			"/rcs lvl - Bringt dich zum nächsten Level",
-			"/rcs skills - Zeigt alle kaufbaren Skills an",
-			"/rcs myskills - Zeigt alle gekauften Skills an",
-			"/rcs info <SkillName> - Zeigt dir Informationen zu 'SkillName'",
-			"/rcs buy <SkillName> - Kauft den Skill 'SkillName' (CaseSensitiv)",
-			"/rcs reset - Resetet alle deine Skills gegen Coins",
-			"/rcs top - Zeigt dir die Top fünf Spieler des Servers an",
-			"/rcs exp - Zeigt dir deine EXP an" };
+	private String[] help = { "/rcs " + Language.helpRcs,
+			"/rcs lvl " + Language.helpRcsLvl,
+			"/rcs skills " + Language.helpSkills,
+			"/rcs myskills " + Language.helpMyskills,
+			"/rcs info <SkillName> " + Language.helpInfo,
+			"/rcs buy <SkillName> " + Language.helpBuy,
+			"/rcs reset " + Language.helpReset, "/rcs top " + Language.helpTop,
+			"/rcs exp " + Language.helpExp };
 
 	public CMDrcs(RCSkills instance) {
 		CMDrcs.plugin = instance;
@@ -66,7 +67,9 @@ public class CMDrcs implements CommandExecutor {
 									+ "/"
 									+ Messaging.colorizeText(
 											"" + p.getExpToNextLevel(),
-											ChatColor.YELLOW) + " Erfahrung");
+											ChatColor.YELLOW)
+									+ " "
+									+ Language.experiance);
 					// send money
 					Messaging.sendMessage(
 							"Money",
@@ -74,13 +77,15 @@ public class CMDrcs implements CommandExecutor {
 							Messaging.colorizeText(""
 									+ p.getAccount().balance(),
 									ChatColor.YELLOW)
-									+ " Coins");
+									+ " " + Language.currency);
 					// send skillpoints
 					Messaging.sendMessage(
-							"Skillpoints",
+							Language.skillpoints,
 							sender,
 							Messaging.colorizeText("" + p.getSkillPoints(),
-									ChatColor.YELLOW) + " Skillpoints");
+									ChatColor.YELLOW)
+									+ " "
+									+ Language.skillpoints);
 					// Send all bought skills
 					String s = "";
 					for (int i = 0; i < p.getSkills().size(); i++) {
@@ -91,20 +96,21 @@ public class CMDrcs implements CommandExecutor {
 					}
 					Messaging.sendMessage("Skills", sender, s);
 				} else {
-					Messaging.sendMessage(sender,
-							"Du hast nicht die nötigen Rechte dafür!");
+					Messaging.sendMessage(sender, Language.noPermission);
 				}
 			} else if (cmd.is(args[0], "player")) {
 				if (args.length == 2
 						&& RCPermissions
 								.permission(cmd.getPlayerOfSender(sender),
 										"rcs.admin.info")) {
+					this.player = cmd.getPlayer(sender, args, 1);
 					RCPlayer p = new RCPlayer(cmd.getPlayer(sender, args, 1));
 					Messaging.sendNoTag(
 							sender,
 							"##### "
-									+ Messaging.colorizeText("RaidCraft Stats",
-											ChatColor.YELLOW) + " #####");
+									+ Messaging.colorizeText(player.getName()
+											+ "'s Stats", ChatColor.YELLOW)
+									+ " #####");
 					// send level
 					Messaging.sendMessage("Level", sender, "Level "
 							+ ChatColor.YELLOW + p.getLevel());
@@ -117,7 +123,9 @@ public class CMDrcs implements CommandExecutor {
 									+ "/"
 									+ Messaging.colorizeText(
 											"" + p.getExpToNextLevel(),
-											ChatColor.YELLOW) + " Erfahrung");
+											ChatColor.YELLOW)
+									+ " "
+									+ Language.experiance);
 					// send money
 					Messaging.sendMessage(
 							"Money",
@@ -125,13 +133,15 @@ public class CMDrcs implements CommandExecutor {
 							Messaging.colorizeText(""
 									+ p.getAccount().balance(),
 									ChatColor.YELLOW)
-									+ " Coins");
+									+ " " + Language.currency);
 					// send skillpoints
 					Messaging.sendMessage(
-							"Skillpoints",
+							Language.skillpoints,
 							sender,
 							Messaging.colorizeText("" + p.getSkillPoints(),
-									ChatColor.YELLOW) + " Skillpoints");
+									ChatColor.YELLOW)
+									+ " "
+									+ Language.skillpoints);
 					// Send all bought skills
 					String s = "";
 					for (int i = 0; i < p.getSkills().size(); i++) {
@@ -142,8 +152,7 @@ public class CMDrcs implements CommandExecutor {
 					}
 					Messaging.sendMessage("Skills", sender, s);
 				} else {
-					Messaging.sendMessage(sender,
-							"Du hast nicht die nötigen Rechte dafür!");
+					Messaging.sendMessage(sender, Language.noPermission);
 				}
 			} else {
 				// Put your commands in here
@@ -157,12 +166,15 @@ public class CMDrcs implements CommandExecutor {
 					if (args.length == 1) {
 						Messaging
 								.sendMessage(
-										"Kaufbare Skills",
+										Language.buyableSkills,
 										sender,
-										"Seite "
+										Language.page
+												+ " "
 												+ Messaging.colorizeText("1",
 														ChatColor.YELLOW)
-												+ " von "
+												+ " "
+												+ Language.from
+												+ " "
 												+ Messaging.colorizeText(
 														""
 																+ ExtraFunctions
@@ -175,17 +187,20 @@ public class CMDrcs implements CommandExecutor {
 									player, 1);
 						else
 							Messaging.sendNoTag(sender, ChatColor.RED
-									+ "Du kannst noch keine Skills kaufen.");
+									+ Language.noLevel);
 					} else if (args.length == 2) {
 						Messaging
 								.sendMessage(
 										"Skills",
 										sender,
-										"Seite "
+										Language.page
+												+ " "
 												+ Messaging.colorizeText(
 														args[1],
 														ChatColor.YELLOW)
-												+ " von "
+												+ " "
+												+ Language.from
+												+ " "
 												+ Messaging.colorizeText(
 														""
 																+ ExtraFunctions
@@ -198,7 +213,7 @@ public class CMDrcs implements CommandExecutor {
 									player, Integer.parseInt(args[1]));
 						else
 							Messaging.sendNoTag(sender, ChatColor.RED
-									+ "Du kannst noch keine Skills kaufen.");
+									+ Language.noLevel);
 					}
 				}
 				if (cmd.is(args[0], "myskills")
@@ -213,10 +228,13 @@ public class CMDrcs implements CommandExecutor {
 								.sendMessage(
 										"Skills",
 										sender,
-										"Seite "
+										Language.page
+												+ " "
 												+ Messaging.colorizeText("1",
 														ChatColor.YELLOW)
-												+ " von "
+												+ " "
+												+ Language.from
+												+ " "
 												+ Messaging.colorizeText(
 														""
 																+ ExtraFunctions
@@ -228,17 +246,20 @@ public class CMDrcs implements CommandExecutor {
 							ExtraFunctions.listPage(p.getSkills(), player, 1);
 						else
 							Messaging.sendNoTag(sender, ChatColor.RED
-									+ "Du hast noch keine Skills gekauft.");
+									+ Language.noSkills);
 					} else if (args.length == 2) {
 						Messaging
 								.sendMessage(
 										"Skills",
 										sender,
-										"Seite "
+										Language.page
+												+ " "
 												+ Messaging.colorizeText(
 														args[1],
 														ChatColor.YELLOW)
-												+ " von "
+												+ " "
+												+ Language.from
+												+ " "
 												+ Messaging.colorizeText(
 														""
 																+ ExtraFunctions
@@ -251,7 +272,7 @@ public class CMDrcs implements CommandExecutor {
 									Integer.parseInt(args[1]));
 						else
 							Messaging.sendNoTag(sender, ChatColor.RED
-									+ "Du hast noch keine Skills gekauft.");
+									+ Language.noSkills);
 					}
 				}
 				if (cmd.is(args[0], "reset")
@@ -263,64 +284,124 @@ public class CMDrcs implements CommandExecutor {
 					RCPlayer p = new RCPlayer(player);
 					if (args.length == 1) {
 						if (p.getSkillCount() == 0) {
-							Messaging
-									.sendMessage(sender,
-											"Du hast keine Skills die du zurücksetzen kannst.");
+							Messaging.sendMessage(sender,
+									Language.noResetSkills);
 							return handled;
 						}
-						Messaging
-								.sendMessage(sender,
-										"Bist du dir sicher, dass du deine Skills zurücksetzen möchtest?");
+						Messaging.sendMessage(sender, Language.confirm);
 						Messaging.sendMessage(
 								sender,
-								"Du bekommst "
+								Language.youGet
+										+ " "
 										+ Messaging.colorizeText(
 												"" + p.calcSpendSkillpoints(),
-												ChatColor.YELLOW)
-										+ " Skillpunkte zurück.");
+												ChatColor.YELLOW) + " "
+										+ Language.skillpointsBack);
 						Messaging
 								.sendMessage(
 										sender,
-										"Dies ist dein "
+										Language.thisIsYour
+												+ " "
 												+ Messaging.colorizeText(
 														(p.getSkillResetCount() + 1)
 																+ ".",
 														ChatColor.YELLOW)
-												+ " Reset und kostet dich: "
+												+ " "
+												+ Language.resetAndCostsYou
+												+ " "
 												+ Messaging.colorizeText(
 														"" + p.getResetCost(),
-														ChatColor.YELLOW)
-												+ " Coins");
-						Messaging
-								.sendMessage(sender,
-										"Gebe '/rcs reset confirm' ein um alle deine Skills zurückzusetzen.");
+														ChatColor.YELLOW) + " "
+												+ Language.currency);
+						Messaging.sendMessage(sender, Language.confirm);
 					} else if (args.length == 2 && cmd.is(args[1], "confirm")) {
 						if (p.getSkillCount() == 0) {
-							Messaging
-									.sendMessage(sender,
-											"Du hast keine Skills die du zurücksetzen kannst.");
+							Messaging.sendMessage(sender,
+									Language.noResetSkills);
 							return handled;
 						} else if (!p.getAccount().hasEnough(p.getResetCost())) {
 							Messaging.sendMessage(sender,
-									"Du hast nicht genug Coins.");
+									Language.youDontHaveEnough + " "
+											+ Language.currency);
 						} else {
-							p.resetSkills();
-							Messaging.sendMessage(
-									sender,
-									"Alle deine Skills wurden zurückgesetzt und dir wurden "
-											+ Messaging.colorizeText(
-													"" + p.getResetCost(),
-													ChatColor.YELLOW)
-											+ " Coins abgezogen.");
-							Messaging.sendMessage(
-									sender,
-									"Du hast nun "
-											+ Messaging.colorizeText(
-													"" + p.getSkillPoints(),
-													ChatColor.YELLOW)
-											+ " Skillpunkte.");
-							p.increaseSkillResetCount();
-							p.writeDatabase();
+							if (p.resetSkills(true)) {
+								Messaging.sendMessage(
+										sender,
+										Language.allSkillsReset
+												+ " "
+												+ Messaging.colorizeText(
+														"" + p.getResetCost(),
+														ChatColor.YELLOW) + " "
+												+ Language.currency + " "
+												+ Language.deducted);
+								Messaging
+										.sendMessage(
+												sender,
+												Language.youHaveNow
+														+ " "
+														+ Messaging.colorizeText(
+																""
+																		+ p.getSkillPoints(),
+																ChatColor.YELLOW)
+														+ " "
+														+ Language.skillpoints);
+								p.increaseSkillResetCount();
+								p.writeDatabase();
+							} else {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Could not remove Skill! Already removed?!");
+							}
+						}
+					} else if (args.length == 3 && cmd.is(args[1], "player")) {
+						if (RCPermissions.permission(
+								cmd.getPlayerOfSender(sender),
+								"rcs.admin.reset")) {
+							this.player = cmd.getPlayer(sender, args, 2);
+							p = new RCPlayer(player);
+							if (p.getSkillCount() == 0) {
+								Messaging.sendMessage(sender,
+										Language.noResetSkills);
+								return handled;
+							} else {
+								if (p.resetSkills(false)) {
+									Messaging
+											.sendMessage(
+													player,
+													Language.allSkillsResetFrom
+															+ " "
+															+ Messaging
+																	.colorizeText(
+																			cmd.getPlayerOfSender(
+																					sender)
+																					.getName(),
+																			ChatColor.YELLOW)
+															+ " "
+															+ Language.reseted);
+									Messaging
+											.sendMessage(
+													player,
+													Language.youHaveNow
+															+ " "
+															+ Messaging
+																	.colorizeText(
+																			""
+																					+ p.getSkillPoints(),
+																			ChatColor.YELLOW)
+															+ " "
+															+ Language.skillpoints);
+									p.increaseSkillResetCount();
+									p.writeDatabase();
+								} else {
+									Messaging
+											.sendMessage(
+													sender,
+													ChatColor.RED
+															+ "Could not remove Skill! Already removed?!");
+								}
+							}
 						}
 					}
 				}
@@ -331,25 +412,68 @@ public class CMDrcs implements CommandExecutor {
 								"rcs.player.skills.info")) {
 					handled = true;
 					this.player = cmd.getPlayerOfSender(sender);
-					if (!args[1].isEmpty()
-							&& SkillsConfig.skillsList.contains(args[1])) {
-						SingleSkill skill = SkillsConfig
-								.getSingleSkill(args[1]);
-						Messaging.sendNoTag(
-								sender,
-								"##### "
-										+ Messaging.colorizeText(args[1],
-												ChatColor.YELLOW) + " #####");
-						Messaging.sendMessage("Name", sender, skill.getName());
-						Messaging.sendMessage("Beschreibung", sender,
-								skill.getDescription());
-						Messaging.sendMessage("Kosten", sender, "Kostet "
-								+ skill.getCosts() + " Coins");
-						Messaging.sendMessage("Level", sender,
-								"Benötigt Level " + skill.getLevel());
-						Messaging.sendMessage("Skillpoints", sender,
-								"Benötigt " + skill.getSkillpoints()
-										+ " Skillpunkte");
+					if (!args[1].isEmpty()) {
+						SingleSkill skill = null;
+						try {
+							int id = Integer.parseInt(args[1]);
+							try {
+								skill = SkillsConfig.getSingleSkill(id);
+							} catch (NullPointerException n) {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit dieser ID!");
+								return handled;
+							}
+						} catch (Exception e) {
+							if (SkillsConfig.skillsList.contains(args[1])) {
+								skill = SkillsConfig.getSingleSkill(args[1]);
+							} else {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit diesem Namen!");
+								return handled;
+							}
+						}
+						try {
+							Messaging.sendNoTag(
+									sender,
+									"##### "
+											+ Messaging.colorizeText(
+													skill.getSkillName(),
+													ChatColor.YELLOW)
+											+ " #####");
+							Messaging.sendMessage(
+									"Name",
+									sender,
+									skill.getName() + " "
+											+ "["
+											+ Messaging.colorizeText(
+													skill.getId() + "",
+													ChatColor.YELLOW) + "]");
+							Messaging.sendMessage(Language.description, sender,
+									skill.getDescription());
+							Messaging.sendMessage(Language.costs, sender,
+									"Kostet " + skill.getCosts() + " Coins");
+							Messaging.sendMessage(
+									"Level",
+									sender,
+									Language.needs + " level "
+											+ skill.getLevel());
+							Messaging.sendMessage(
+									"Skillpoints",
+									sender,
+									Language.needs + " "
+											+ skill.getSkillpoints() + " "
+											+ Language.skillpoints);
+						} catch (NullPointerException e) {
+							Messaging.sendMessage(sender, ChatColor.RED
+									+ "Es gibt keinen Skill mit diesem Namen!");
+							return handled;
+						}
 					}
 				}
 				if (cmd.is(args[0], "buy")
@@ -360,43 +484,168 @@ public class CMDrcs implements CommandExecutor {
 					handled = true;
 					this.player = cmd.getPlayerOfSender(sender);
 					RCPlayer p = new RCPlayer(player);
-					if (!args[1].isEmpty()
-							&& SkillsConfig.skillsList.contains(args[1])) {
-						SingleSkill skill = SkillsConfig
-								.getSingleSkill(args[1]);
-						if (p.hasSkill(skill)) {
-							Messaging.sendMessage(sender,
-									"Du hast diesen Skill bereits gekauft.");
-						} else if (!p.hasEnoughSkillpoints(skill
-								.getSkillpoints())) {
-							Messaging.sendMessage(sender,
-									"Du hast nicht genügend Skillpunkte!");
-						} else if (!p.getAccount().hasEnough(skill.getCosts())) {
-							Messaging.sendMessage(sender,
-									"Du hast nicht genügend Coins!");
-						} else if (!(p.getLevel() >= skill.getLevel())) {
-							Messaging.sendMessage(sender, "Du benötigst Level "
-									+ skill.getLevel() + " für diesen Skill.");
-						} else {
-							p.addSkill(skill.getSkillName());
-							p.getAccount().subtract(skill.getCosts());
-							Messaging.sendMessage(sender, "Du hast soeben "
-									+ skill.getName() + " gekauft");
-							Messaging
-									.sendMessage(
-											sender,
-											"Dir wurden "
-													+ Messaging.colorizeText(""
-															+ skill.getCosts(),
-															ChatColor.YELLOW)
-													+ " Coins und "
-													+ Messaging.colorizeText(
-															""
-																	+ skill.getSkillpoints(),
-															ChatColor.YELLOW)
-													+ " Skillpunkte abgezogen");
+					if (!args[1].isEmpty()) {
+						SingleSkill skill = null;
+						try {
+							int id = Integer.valueOf(args[1]).intValue();
+							try {
+								skill = SkillsConfig.getSingleSkill(id);
+							} catch (NullPointerException n) {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit dieser ID!");
+								return handled;
+							}
+						} catch (NumberFormatException e) {
+							if (SkillsConfig.skillsList.contains(args[1])) {
+								skill = SkillsConfig.getSingleSkill(args[1]);
+							} else {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit diesem Namen!");
+								return handled;
+							}
+						}
+						try {
+							if (p.hasSkill(skill)) {
+								Messaging.sendMessage(sender,
+										Language.youAlreadyHaveThisSkill);
+							} else if (!p.hasEnoughSkillpoints(skill
+									.getSkillpoints())) {
+								Messaging.sendMessage(sender,
+										Language.youDontHaveEnough + " "
+												+ Language.skillpoints);
+							} else if (!p.getAccount().hasEnough(
+									skill.getCosts())) {
+								Messaging.sendMessage(sender,
+										Language.youDontHaveEnough + " "
+												+ Language.currency);
+							} else if (!(p.getLevel() >= skill.getLevel())) {
+								Messaging.sendMessage(
+										sender,
+										Language.youNeedLevel + " "
+												+ skill.getLevel() + " "
+												+ Language.forThatSkill);
+							} else {
+
+								if (p.addSkill(skill.getSkillName(), true)) {
+									p.getAccount().subtract(skill.getCosts());
+									Messaging.sendMessage(sender,
+											Language.youJustBought + ": "
+													+ skill.getName());
+									Messaging
+											.sendMessage(
+													sender,
+													Language.youGot
+															+ " "
+															+ Messaging
+																	.colorizeText(
+																			""
+																					+ skill.getCosts(),
+																			ChatColor.YELLOW)
+															+ " "
+															+ Language.currency
+															+ " "
+															+ Language.and
+															+ " "
+															+ Messaging
+																	.colorizeText(
+																			""
+																					+ skill.getSkillpoints(),
+																			ChatColor.YELLOW)
+															+ " "
+															+ Language.skillpoints
+															+ " "
+															+ Language.deducted);
+
+								} else {
+									Messaging.sendMessage(sender, ChatColor.RED
+											+ "Group " + skill.getGroup()
+											+ " does not exist!");
+								}
+
+							}
+						} catch (NullPointerException e) {
+							Messaging.sendMessage(sender, ChatColor.RED
+									+ "Es gibt keinen Skill mit diesem Namen!");
+							return handled;
 						}
 					}
+					p.writeDatabase();
+				}
+				if (cmd.is(args[0], "addskill")
+						&& args.length == 3
+						&& RCPermissions.permission(
+								cmd.getPlayerOfSender(sender),
+								"rcs.admin.addskill")) {
+					handled = true;
+					this.player = cmd.getPlayer(sender, args, 1);
+					RCPlayer p = new RCPlayer(player);
+					if (!args[2].isEmpty()) {
+						SingleSkill skill = null;
+						try {
+							int id = Integer.valueOf(args[2]).intValue();
+							try {
+								skill = SkillsConfig.getSingleSkill(id);
+							} catch (ArrayIndexOutOfBoundsException oob) {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit dieser ID!");
+								return handled;
+							}
+						} catch (NumberFormatException e) {
+							if (SkillsConfig.skillsList.contains(args[2])) {
+								skill = SkillsConfig.getSingleSkill(args[2]);
+							} else {
+								Messaging
+										.sendMessage(
+												sender,
+												ChatColor.RED
+														+ "Es gibt keinen Skill mit diesem Namen!");
+								return handled;
+							}
+						}
+						try {
+							if (p.hasSkill(skill)) {
+								Messaging.sendMessage(sender, p.getPlayerName()
+										+ " " + Language.alreadyHasThisSkill);
+							} else if (!(p.getLevel() >= skill.getLevel())) {
+								Messaging.sendMessage(sender, p.getPlayerName()
+										+ " " + Language.needs + " level "
+										+ skill.getLevel() + " "
+										+ Language.forThatSkill);
+							} else {
+								if (p.addSkill(skill.getSkillName(), false)) {
+									Messaging.sendMessage(
+											player,
+											Language.YouJustGotSkill
+													+ " '"
+													+ skill.getName()
+													+ "' "
+													+ Language.from + " "
+													+ cmd.getPlayerOfSender(
+															sender).getName()
+													+ " " + Language.bekommen);
+
+								} else {
+									Messaging.sendMessage(sender, ChatColor.RED
+											+ "Group " + skill.getGroup()
+											+ " does not exist!");
+								}
+							}
+						} catch (NullPointerException e) {
+							Messaging.sendMessage(sender, ChatColor.RED
+									+ "Es gibt keinen Skill mit diesem Namen!");
+							return handled;
+						}
+					}
+
 					p.writeDatabase();
 				}
 				if (cmd.is(args[0], "lvl") && args.length == 1) {
@@ -408,25 +657,26 @@ public class CMDrcs implements CommandExecutor {
 						RCPlayer p = new RCPlayer(player);
 						p.checkForItems();
 						if (p.lvlup(false)) {
-							Messaging.sendMessage(sender, "Du bist nun Level "
-									+ p.getLevel());
 							Messaging.sendMessage(
 									sender,
-									"Dir wurden " + ChatColor.YELLOW
+									Language.youAreNowLevel + " "
+											+ p.getLevel());
+							Messaging.sendMessage(sender,
+									Language.youGot + " " + ChatColor.YELLOW
 											+ p.getExpToLevel(p.getLevel())
-											+ " EXP abgezogen.");
+											+ " EXP " + Language.deducted);
 							Messaging.sendMessage(p.getServer(),
-									player.getName() + " ist nun Level "
+									player.getName() + " "
+											+ Language.isNowLevel + " "
 											+ ChatColor.YELLOW + p.getLevel());
-							RCLogger.info(player.getName() + " ist nun Level "
-									+ p.getLevel());
+							RCLogger.info(player.getName() + " "
+									+ Language.isNowLevel + " " + p.getLevel());
 
 							// Save Changes
 							p.writeDatabase();
 						}
 					} else {
-						Messaging.sendMessage(sender,
-								"Du hast nicht die nötigen Rechte dafür!");
+						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				} else if (cmd.is(args[0], "lvl")) {
 					// Put your commands in here
@@ -442,17 +692,19 @@ public class CMDrcs implements CommandExecutor {
 							if (p.lvlup(true)) {
 								Messaging.sendMessage(
 										p.getServer(),
-										player.getName() + " ist nun Level "
+										player.getName() + " "
+												+ Language.isNowLevel + " "
 												+ ChatColor.YELLOW
 												+ p.getLevel());
-								RCLogger.info(player.getName()
-										+ " ist nun Level " + p.getLevel());
+								RCLogger.info(player.getName() + " "
+										+ Language.isNowLevel + " "
+										+ p.getLevel());
 								// Save Changes
 								p.writeDatabase();
 							}
 						} else {
-							Messaging.sendMessage(sender,
-									"Du hast nicht die nötigen Rechte dafür!");
+							Messaging
+									.sendMessage(sender, Language.noPermission);
 						}
 					}
 				}
@@ -469,8 +721,7 @@ public class CMDrcs implements CommandExecutor {
 							cmd.getTopList(Integer.parseInt(args[1]), sender);
 						}
 					} else {
-						Messaging.sendMessage(sender,
-								"Du hast nicht die nötigen Rechte dafür!");
+						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
 				if (cmd.is(args[0], "xp") || cmd.is(args[0], "exp")) {
@@ -484,15 +735,18 @@ public class CMDrcs implements CommandExecutor {
 							RCPlayer p = new RCPlayer(player);
 							Messaging.sendMessage(
 									sender,
-									"Du hast "
+									Language.youGot
+											+ " "
 											+ Messaging.colorizeText(
 													"" + p.getExp(),
 													ChatColor.YELLOW)
-											+ " von "
+											+ " "
+											+ Language.from
+											+ " "
 											+ Messaging.colorizeText(
 													"" + p.getExpToNextLevel(),
-													ChatColor.YELLOW)
-											+ " EXP für das nächste Level");
+													ChatColor.YELLOW) + " EXP "
+											+ Language.forTheNextLevel);
 						} else if (args.length == 2
 								&& RCPermissions.permission(
 										cmd.getPlayerOfSender(sender),
@@ -504,19 +758,23 @@ public class CMDrcs implements CommandExecutor {
 									Messaging.colorizeText(
 											"" + p.getPlayerName(),
 											ChatColor.YELLOW)
-											+ " hat "
+											+ " "
+											+ Language.has
+											+ " "
 											+ Messaging.colorizeText(
 													"" + p.getExp(),
 													ChatColor.YELLOW)
-											+ " von "
+											+ " "
+											+ Language.from
+											+ " "
 											+ Messaging.colorizeText(
 													"" + p.getExpToNextLevel(),
 													ChatColor.YELLOW)
-											+ " für das nächste Level");
+											+ " "
+											+ Language.forTheNextLevel);
 						}
 					} else {
-						Messaging.sendMessage(sender,
-								"You do not have permission.");
+						Messaging.sendMessage(sender, Language.noPermission);
 					}
 
 				}
@@ -542,6 +800,7 @@ public class CMDrcs implements CommandExecutor {
 											"rcs.reload")) {
 						RCConfig.load();
 						SkillsConfig.load();
+						Language.load();
 						Messaging.sendMessage(
 								sender,
 								Messaging.colorizeText(RCSkills.name,
@@ -555,30 +814,85 @@ public class CMDrcs implements CommandExecutor {
 							&& RCPermissions.permission(
 									cmd.getPlayerOfSender(sender),
 									"rcs.admin.setlvl")) {
-						if (cmd.is(args[1], "player") && args.length == 4) {
-							this.player = cmd.getPlayer(sender, args, 2);
+						if (args.length == 3) {
+							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
-							if (!(p.getLevel() != -1)) {
-								p.setLevel(Integer.parseInt(args[3]));
+							if ((p.getLevel() != -1)) {
+								p.setLevel(Integer.parseInt(args[2]));
 								Messaging.sendMessage(
 										p.getServer(),
-										player.getName() + " ist nun Level "
+										player.getName() + " "
+												+ Language.isNowLevel + " "
 												+ ChatColor.YELLOW
 												+ p.getLevel());
-								RCLogger.info(player.getName()
-										+ " ist nun Level " + p.getLevel());
+								RCLogger.info(player.getName() + " "
+										+ Language.isNowLevel + " "
+										+ p.getLevel());
 								// Save Changes
 								p.writeDatabase();
 							} else {
-								Messaging
-										.sendMessage(sender,
-												"Spieler in dieser Gruppe können nicht leveln.");
+								Messaging.sendMessage(sender,
+										Language.cantLevel);
 							}
 
 						}
 					} else {
-						Messaging.sendMessage(sender,
-								"Du hast nicht die nötigen Rechte dafür!");
+						Messaging.sendMessage(sender, Language.noPermission);
+					}
+				}
+				if (cmd.is(args[0], "setxp") && args.length > 1) {
+					handled = true;
+					if (cmd.isPlayer(sender)
+							&& RCPermissions.permission(
+									cmd.getPlayerOfSender(sender),
+									"rcs.admin.setxp")) {
+						if (args.length == 3) {
+							this.player = cmd.getPlayer(sender, args, 1);
+							RCPlayer p = new RCPlayer(player);
+							if ((p.getLevel() != -1)) {
+								p.setExp(Integer.parseInt(args[2]));
+								Messaging.sendMessage(sender, player.getName()
+										+ " " + Language.hasNow + " "
+										+ ChatColor.YELLOW + p.getExp() + " "
+										+ Language.experiance);
+								// Save Changes
+								p.writeDatabase();
+							} else {
+								Messaging.sendMessage(sender,
+										Language.cantLevel);
+							}
+
+						}
+					} else {
+						Messaging.sendMessage(sender, Language.noPermission);
+					}
+				}
+				if (cmd.is(args[0], "setsp")
+						|| cmd.is(args[0], "setskillpoints") && args.length > 1) {
+					handled = true;
+					if (cmd.isPlayer(sender)
+							&& RCPermissions.permission(
+									cmd.getPlayerOfSender(sender),
+									"rcs.admin.setsp")) {
+						if (args.length == 3) {
+							this.player = cmd.getPlayer(sender, args, 1);
+							RCPlayer p = new RCPlayer(player);
+							if ((p.getLevel() != -1)) {
+								p.setSkillPoints((Integer.parseInt(args[2])));
+								Messaging.sendMessage(sender, player.getName()
+										+ " " + Language.hasNow + " "
+										+ ChatColor.YELLOW + p.getSkillPoints()
+										+ " " + Language.skillpoints);
+								// Save Changes
+								p.writeDatabase();
+							} else {
+								Messaging.sendMessage(sender,
+										Language.cantLevel);
+							}
+
+						}
+					} else {
+						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
 				if (cmd.is(args[0], "help") || cmd.is(args[0], "?")) {
@@ -587,11 +901,14 @@ public class CMDrcs implements CommandExecutor {
 								.sendMessage(
 										"RCSkills Help",
 										sender,
-										"Seite "
+										Language.page
+												+ " "
 												+ Messaging.colorizeText(
 														"" + 1,
 														ChatColor.YELLOW)
-												+ " von "
+												+ " "
+												+ Language.from
+												+ " "
 												+ Messaging.colorizeText(
 														""
 																+ ExtraFunctions
@@ -601,21 +918,25 @@ public class CMDrcs implements CommandExecutor {
 								cmd.getPlayerOfSender(sender), 1);
 					} else if (args.length == 2) {
 						Messaging
-						.sendMessage(
-								"RCSkills Help",
-								sender,
-								"Seite "
-										+ Messaging.colorizeText(
-												"" + args[1],
-												ChatColor.YELLOW)
-										+ " von "
-										+ Messaging.colorizeText(
-												""
-														+ ExtraFunctions
-																.getPages(help),
-												ChatColor.YELLOW));
+								.sendMessage(
+										"RCSkills Help",
+										sender,
+										Language.page
+												+ " "
+												+ Messaging.colorizeText(""
+														+ args[1],
+														ChatColor.YELLOW)
+												+ " "
+												+ Language.from
+												+ " "
+												+ Messaging.colorizeText(
+														""
+																+ ExtraFunctions
+																		.getPages(help),
+														ChatColor.YELLOW));
 						ExtraFunctions.listPage(help,
-								cmd.getPlayerOfSender(sender), Integer.parseInt(args[1]));
+								cmd.getPlayerOfSender(sender),
+								Integer.parseInt(args[1]));
 					}
 				}
 			}

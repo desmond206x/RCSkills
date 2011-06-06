@@ -21,7 +21,6 @@ public class RCConfig {
 	public static int itemID;
 	public static String itemName;
 	public static int maxLevel;
-	public static boolean useItems;
 	public static int skillpointsInterval;
 	public static int skillPoints;
 
@@ -89,7 +88,6 @@ public class RCConfig {
 		RCConfig.itemID = file.getInt("Item ID", 19);
 		RCConfig.itemName = file.getString("Item Name", "Sponge");
 		RCConfig.maxLevel = file.getInt("maxLevel", 25);
-		RCConfig.useItems = file.getBoolean("useItems", false);
 		RCConfig.skillpointsInterval = file.getInt("Skillpoints Interval", 5);
 		RCConfig.skillPoints = file.getInt("Skillpoints", 1);
 

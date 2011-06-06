@@ -17,6 +17,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.silthus.rcskills.commands.CMDrcs;
+import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SkillsConfig;
 import com.silthus.rcskills.database.DBLevelup;
@@ -55,6 +56,7 @@ public class RCSkills extends JavaPlugin {
 		// Settings
 		RCConfig.initialize(this);
 		SkillsConfig.initialize(this);
+		Language.initialize(this);
 
 		// Database
 		setupDatabase();
