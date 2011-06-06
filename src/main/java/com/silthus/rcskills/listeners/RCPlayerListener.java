@@ -34,7 +34,7 @@ public class RCPlayerListener extends PlayerListener {
 		if (RCConfig.useDailyExp == true) {
 			// need to check for vip permissions first
 			if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "lvlup.exp.vip")) {
+					&& RCPermissions.permission(player, "rcs.join.vip")) {
 				// adds the daily ration vip exp
 				p.addExp(RCConfig.vipExp);
 				Messaging.sendMessage(player,
@@ -45,7 +45,7 @@ public class RCPlayerListener extends PlayerListener {
 				// checks for lvlup after the player got exp
 				p.checkLevelUP();
 			} else if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "lvlup.exp.normal")) {
+					&& RCPermissions.permission(player, "rcs.join.normal")) {
 				// adds the daily ration exp
 				p.addExp(RCConfig.normalExp);
 				Messaging.sendMessage(player,

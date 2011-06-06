@@ -1,7 +1,6 @@
 # Configversion - DO NOT TOUCH!
 configversion: 1
 ######################################################
-# If useitems = true what items should be used?
 # Set to 0 if you dont want to convert any items
 Item ID: 19
 # The name of the item (only relevant for the chat)
@@ -12,10 +11,6 @@ maxLevel: 25
 Skillpoints Interval: 5
 # How many skillpoints shall we give them?
 Skillpoints: 1
-
-Permissions:
-    # Whats the name of the Permissions track your levels are on?
-    track: level
 
 # Config for the daily login bonus.
 DailyExp:
