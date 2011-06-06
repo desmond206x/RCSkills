@@ -421,7 +421,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit dieser ID!");
+														+ "There is now Skill with that ID!");
 								return handled;
 							}
 						} catch (Exception e) {
@@ -432,7 +432,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit diesem Namen!");
+														+ "There is no skill with that name!");
 								return handled;
 							}
 						}
@@ -469,7 +469,7 @@ public class CMDrcs implements CommandExecutor {
 											+ Language.skillpoints);
 						} catch (NullPointerException e) {
 							Messaging.sendMessage(sender, ChatColor.RED
-									+ "Es gibt keinen Skill mit diesem Namen!");
+									+ "There is no skill with that name!");
 							return handled;
 						}
 					}
@@ -493,7 +493,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit dieser ID!");
+														+ "There is no skill with that ID!");
 								return handled;
 							}
 						} catch (NumberFormatException e) {
@@ -504,7 +504,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit diesem Namen!");
+														+ "There is no skill with that Name!");
 								return handled;
 							}
 						}
@@ -569,7 +569,7 @@ public class CMDrcs implements CommandExecutor {
 							}
 						} catch (NullPointerException e) {
 							Messaging.sendMessage(sender, ChatColor.RED
-									+ "Es gibt keinen Skill mit diesem Namen!");
+									+ "There is no skill with that name!");
 							return handled;
 						}
 					}
@@ -594,7 +594,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit dieser ID!");
+														+ "There is no skill with that ID!");
 								return handled;
 							}
 						} catch (NumberFormatException e) {
@@ -605,7 +605,7 @@ public class CMDrcs implements CommandExecutor {
 										.sendMessage(
 												sender,
 												ChatColor.RED
-														+ "Es gibt keinen Skill mit diesem Namen!");
+														+ "There is no skill with that name!");
 								return handled;
 							}
 						}
@@ -639,7 +639,7 @@ public class CMDrcs implements CommandExecutor {
 							}
 						} catch (NullPointerException e) {
 							Messaging.sendMessage(sender, ChatColor.RED
-									+ "Es gibt keinen Skill mit diesem Namen!");
+									+ "There is no skill with that name!");
 							return handled;
 						}
 					}
