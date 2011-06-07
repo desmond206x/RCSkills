@@ -9,6 +9,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.nfunk.jep.JEP;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.nijikokun.register.payment.methods.iCo5;
@@ -38,6 +39,7 @@ public class RCPlayer {
 	private int skillResetCount = 0;
 	private String lastJoinDate = "01-01-2011";
 	private MethodAccount account;
+	private int converted = 0;
 
 	private DBLevelup lvldb = null;
 	private List<DBSkills> skills = null;
@@ -59,6 +61,14 @@ public class RCPlayer {
 		// Load iConomy
 		loadAccount();
 	}
+	
+	public int getConverted() {
+		return this.converted;
+	}
+	
+	public void setConverted() {
+		this.converted = 1;
+	}
 
 	private void loadStats() {
 		this.player = lvldb.getPlayer();
@@ -71,6 +81,7 @@ public class RCPlayer {
 		this.skillResetCount = lvldb.getSkillResetCount();
 		this.skillCount = lvldb.getSkillCount();
 		this.spendSkillpoints = lvldb.getSpendSkillpoints();
+		this.converted = lvldb.getConverted();
 	}
 
 	private void loadLevelDatabase() {
@@ -87,6 +98,7 @@ public class RCPlayer {
 			lvldb.setSkillResetCount(0);
 			lvldb.setSkillCount(skills.size());
 			lvldb.setSpendSkillpoints(getSpendSkillpoints());
+			lvldb.setConverted(getConverted());
 		}
 	}
 
@@ -110,6 +122,7 @@ public class RCPlayer {
 		lvldb.setSkillCount(getSkillCount());
 		lvldb.setSkillResetCount(getSkillResetCount());
 		lvldb.setSpendSkillpoints(getSpendSkillpoints());
+		lvldb.setConverted(getConverted());
 		RCPlayer.plugin.getDatabase().save(lvldb);
 	}
 
@@ -125,6 +138,10 @@ public class RCPlayer {
 			RCPermissions.addParent(player, group);
 		}
 
+	}
+	
+	public void removePermissions() {
+		RCPermissions.removeAllPermissions(player);
 	}
 
 	public void setExp(int exp) {
@@ -392,7 +409,11 @@ public class RCPlayer {
 	 * @return exp
 	 */
 	public int getExpToLevel(int level) {
-		return ((((level) * (level)) - ((level) * 5) + 20));
+		JEP jep = new JEP();
+		jep.addVariable("lvl", level);
+		jep.parseExpression(RCConfig.expCalc);
+		Object result = jep.getValueAsObject();
+		return (Integer) result;
 	}
 
 	/**
