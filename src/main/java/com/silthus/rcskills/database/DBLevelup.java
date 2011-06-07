@@ -32,6 +32,7 @@ public class DBLevelup {
 	private int skillCount;
 	private int skillResetCount;
 	private int spendSkillpoints;
+	private int converted;
 
 	public void setId(int id) {
 		this.id = id;
@@ -125,5 +126,19 @@ public class DBLevelup {
 	 */
 	public int getSpendSkillpoints() {
 		return spendSkillpoints;
+	}
+
+	/**
+	 * @param converted the converted to set
+	 */
+	public void setConverted(int converted) {
+		this.converted = converted;
+	}
+
+	/**
+	 * @return the converted
+	 */
+	public int getConverted() {
+		return converted;
 	}
 }
