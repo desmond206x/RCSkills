@@ -1,5 +1,7 @@
 package com.silthus.rcskills;
 
+import java.util.Set;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -98,6 +100,14 @@ public class RCPermissions {
 			return false;
 		userToBe.demote(groupToBe.toGroupWorld(), track);
 		return true;
+	}
+	
+	public static void removeAllPermissions(Player player) {
+		User user = permissionsHandler.getUserObject(player.getWorld().getName(), player.getName());
+		Set<String> perms = user.getPermissions();
+		for (String s : perms) {
+			user.removePermission(s);
+		}
 	}
 	
 	public static void saveAll() {
