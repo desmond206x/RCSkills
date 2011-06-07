@@ -54,7 +54,7 @@ public class RCConfig {
 		}
 		config = new Configuration(configFile);
 		config.load();
-		if (config.getInt("configversion", 2) < 2) {
+		if (config.getInt("configversion", 3) < 3) {
 			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + configFileName + "_old");
 			if (renameFile.exists())
 				renameFile.delete();
