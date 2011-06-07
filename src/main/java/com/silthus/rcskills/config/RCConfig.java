@@ -31,6 +31,8 @@ public class RCConfig {
 	public static int vipExp;
 	
 	public static String title;
+	
+	public static String expCalc;
 
 	public static void initialize(RCSkills instance) {
 		RCConfig.plugin = instance;
@@ -38,7 +40,7 @@ public class RCConfig {
 	}
 
 	public static void load() {
-
+		
 		if (!plugin.getDataFolder().exists()) {
 			plugin.getDataFolder().mkdirs();
 		}
@@ -100,6 +102,8 @@ public class RCConfig {
 		RCConfig.vipExp = file.getInt("DailyExp.vipExp", 40);
 		
 		RCConfig.title = file.getString("title", "RaidCraft");
+		
+		RCConfig.expCalc = file.getString("expCalculation", "((((lvl) * (lvl)) - ((lvl) * 5) + 20))");
+		
 	}
-
 }
