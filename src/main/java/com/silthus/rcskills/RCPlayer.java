@@ -409,11 +409,13 @@ public class RCPlayer {
 	 * @return exp
 	 */
 	public int getExpToLevel(int level) {
-		JEP jep = new JEP();
+		// TODO: replace formula with config
+		/*JEP jep = new JEP();
 		jep.addVariable("lvl", level);
 		jep.parseExpression(RCConfig.expCalc);
 		Object result = jep.getValueAsObject();
-		return (Integer) result;
+		return (Integer) result;*/
+		return ((((level) * (level)) - ((level) * 5) + 20));
 	}
 
 	/**
