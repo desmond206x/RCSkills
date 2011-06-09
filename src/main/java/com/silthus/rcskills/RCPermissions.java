@@ -19,7 +19,11 @@ public class RCPermissions {
 	public static Plugin permissionPlugin;
 	private static PermissionHandler permissionsHandler;
 	private static RCSkills plugin;
-
+	
+	/**
+	 * loads the Permissions plugin
+	 * @param instance
+	 */
 	public static void initialize(RCSkills instance) {
 		RCPermissions.plugin = instance;
 		Plugin Permissions = plugin.getServer().getPluginManager()
@@ -44,19 +48,41 @@ public class RCPermissions {
 			}
 		}
 	}
-
+	
+	/**
+	 * checks if player has permission
+	 * @param player
+	 * @param permission
+	 * @return hasPermission
+	 */
 	public static boolean permission(Player player, String permission) {
 		return RCPermissions.permissionsHandler.has(player, permission);
 	}
-
+	
+	/**
+	 * checks if the player is admin
+	 * @param player
+	 * @return isAdmin
+	 */
 	public static boolean isAdmin(Player player) {
 		return permission(player, "basic.admin");
 	}
-
+	
+	/**
+	 * Gets the main group of the player
+	 * @param player
+	 * @return
+	 */
 	public static String getPrimaryGroup(Player player) {
 		return permissionsHandler.getPrimaryGroup(player.getWorld().getName(), player.getName());
 	}
-
+	
+	/**
+	 * Adds a group to the player
+	 * @param player
+	 * @param group
+	 * @return addedGroup?
+	 */
 	public static boolean addParent(Player player, String group) {
 		User userToBe = permissionsHandler.getUserObject(player.getWorld().getName(),
 				player.getName());
@@ -68,7 +94,13 @@ public class RCPermissions {
 		userToBe.addParent(groupToBe);
 		return true;
 	}
-
+	
+	/**
+	 * removes a group from the player
+	 * @param player
+	 * @param group
+	 * @return removedGroup?
+	 */
 	public static boolean removeParent(Player player, String group) {
 		User userToBe = permissionsHandler.getUserObject(player.getWorld().getName(),player.getName());
 		if (userToBe == null)
@@ -80,6 +112,14 @@ public class RCPermissions {
 		return true;
 	}
 	
+	/**
+	 * promotes a player along the set track
+	 * @param player
+	 * @param track
+	 * @param group
+	 * @return
+	 */
+	@Deprecated
 	public static boolean promote(Player player, String track, String group) {
 		User userToBe = permissionsHandler.getUserObject(player.getWorld().getName(),player.getName());
 		if (userToBe == null)
@@ -91,6 +131,14 @@ public class RCPermissions {
 		return true;
 	}
 	
+	/**
+	 * demotes the player along the set track
+	 * @param player
+	 * @param track
+	 * @param group
+	 * @return
+	 */
+	@Deprecated
 	public static boolean demote(Player player, String track, String group) {
 		User userToBe = permissionsHandler.getUserObject(player.getWorld().getName(),player.getName());
 		if (userToBe == null)
@@ -102,6 +150,10 @@ public class RCPermissions {
 		return true;
 	}
 	
+	/**
+	 * removes all Permissions
+	 * @param player
+	 */
 	public static void removeAllPermissions(Player player) {
 		User user = permissionsHandler.getUserObject(player.getWorld().getName(), player.getName());
 		Set<String> perms = user.getPermissions();
@@ -110,6 +162,9 @@ public class RCPermissions {
 		}
 	}
 	
+	/**
+	 * Saves all Permissions into the files
+	 */
 	public static void saveAll() {
 		permissionsHandler.saveAll();
 	}

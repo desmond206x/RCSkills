@@ -119,7 +119,7 @@ public class RCPlayer {
 	
 	/**
 	 * gets the iConomy Account for the player
-	 * can be interacted with loadAccount().*
+	 * can be interacted with getAccount().*
 	 */
 	private void loadAccount() {
 		iCo5 economy = new iCo5();
@@ -222,7 +222,11 @@ public class RCPlayer {
 	public void removeSkillPoints(int points) {
 		this.skillPoints -= points;
 	}
-
+	
+	/**
+	 * Grants the player skillpoints based on the set interval in the config
+	 * @return
+	 */
 	public boolean grantSkillPoints() {
 		if (getLevel() != 0 && getLevel() % RCConfig.skillpointsInterval == 0) {
 			Messaging.sendMessage(player, "You just got "
@@ -291,14 +295,28 @@ public class RCPlayer {
 			return true;
 		return false;
 	}
-
+	
+	/**
+	 * call this method to interact with the iConomy
+	 * account of this player
+	 * @return
+	 */
 	public MethodAccount getAccount() {
 		return this.account;
 	}
-
+	
+	/**
+	 * Adds a skill and removes skillpoints if boolean true
+	 * @param skillName
+	 * @param removeSkillpoints
+	 * @return false if group does not exist
+	 */
 	public boolean addSkill(String skillName, boolean removeSkillpoints) {
+		// connects to db
 		DBSkills skillsdb = new DBSkills();
+		// creates single skill from skillname
 		SingleSkill skill = SkillsConfig.getSingleSkill(skillName);
+		// adds the Permission group to the player
 		if (RCPermissions.addParent(player, skill.getGroup())) {
 			skillsdb.setPlayer(player);
 			skillsdb.setSkillName(skillName);
@@ -307,30 +325,47 @@ public class RCPlayer {
 			skillsdb.setSkillPoints(skill.getSkillpoints());
 			skillsdb.setSkillLevel(skill.getLevel());
 			increaseSkillCount();
+			// removes skillpoints if bool true
 			if (removeSkillpoints) {
 				addSpendSkillpoints(skill.getSkillpoints());
 				removeSkillPoints(skill.getSkillpoints());
 			}
+			// saves all
 			RCPlayer.plugin.getDatabase().save(skillsdb);
+			RCPermissions.saveAll();
 			return true;
 		}
 		return false;
 	}
-
+	
+	/**
+	 * removes a skill from player
+	 * @param skillName
+	 * @return
+	 */
 	public boolean removeSkill(String skillName) {
+		// connects to DB and gets unique skil from unique player
 		DBSkills skillsdb = RCPlayer.plugin.getDatabase().find(DBSkills.class)
 				.where().ieq("skillName", skillName).where()
 				.ieq("playerName", player.getName()).findUnique();
+		// removes group for skill
 		if (RCPermissions.removeParent(player, skillsdb.getGroupName())) {
 		decreaseSkillCount();
+		// gives back skillpoints
 		addSkillPoints(skillsdb.getSkillPoints());
+		// saves all
 		RCPlayer.plugin.getDatabase().delete(skillsdb);
 		RCPlayer.plugin.getDatabase().save(skillsdb);
+		RCPermissions.saveAll();
 		return true;
 		}
 		return false;
 	}
-
+	
+	/*
+	 * Resets all skills
+	 * Cycles through removeSkill()
+	 */
 	public boolean resetSkills(boolean removeMoney) {
 		if (skills == null)
 			return false;
@@ -341,8 +376,14 @@ public class RCPlayer {
 			this.account.subtract(getResetCost());
 		return true;
 	}
-
+	
+	/**
+	 * Checks if player has skill
+	 * @param skill
+	 * @return hasSkill
+	 */
 	public boolean hasSkill(SingleSkill skill) {
+		// loads the skill from db
 		DBSkills skillsdb = RCPlayer.plugin.getDatabase().find(DBSkills.class)
 				.where().ieq("skillName", skill.getSkillName()).where()
 				.ieq("playerName", player.getName()).findUnique();
@@ -350,15 +391,22 @@ public class RCPlayer {
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * Gets all skills this player can buy
+	 * @return buyableSkills
+	 */
 	public String[] getBuyableSkills() {
 		int i = 0;
+		// first get all skills and filter the ones with a too high level
 		for (String s : SkillsConfig.skills) {
 			if (SkillsConfig.getSingleSkill(s).getLevel() <= getLevel())
 				i++;
 		}
 		String[] buyableSkills = new String[i];
 		i = 0;
+		// organize the filtered skills and
+		// save them into a String array
 		for (String s : SkillsConfig.skills) {
 			if (SkillsConfig.getSingleSkill(s).getLevel() <= getLevel()) {
 				if (!skills.contains(s)) {
@@ -393,15 +441,22 @@ public class RCPlayer {
 	public int getTotalSkillpoints() {
 		return this.spendSkillpoints + this.skillPoints;
 	}
-
+	
+	/**
+	 * gets the reset cost
+	 * @return
+	 */
 	public int getResetCost() {
+		// increase reset count by one because we already resetted this many times
 		int count = this.skillResetCount + 1;
 		if (this.skillResetCount > 5) {
 			count = 5;
+			// TODO: make configurable in config
+			// use same method as for the level formula
 			return (int) (Math.pow(10, count));
 		} else if (this.skillResetCount == 0) {
 			count = 1;
-			// TODO: make config
+			// TODO: make configurable
 			return 10;
 		}
 		return (int) (Math.pow(10, count));
@@ -447,11 +502,12 @@ public class RCPlayer {
 	 * @param amount
 	 */
 	public void removeItems(int item_id, int amount) {
-
+		
+		// get ItemStack for all items which should be removes
 		ItemStack items = new ItemStack(item_id, amount);
-
-		HashMap<Integer, ItemStack> difference = player.getInventory()
-				.removeItem(items);
+		
+		// remove all items and save if too many where removed
+		HashMap<Integer, ItemStack> difference = player.getInventory().removeItem(items);
 		// give back the diffrence
 		for (ItemStack s : difference.values())
 			player.getInventory().addItem(s);
@@ -466,10 +522,13 @@ public class RCPlayer {
 	private boolean nextLevel(boolean b) {
 		if (getLevel() + 1 <= RCConfig.maxLevel) {
 			if (b == false) {
-				removeExp(getExpToNextLevel()); // set new exp
+				// set new exp
+				removeExp(getExpToNextLevel()); 
 			}
-			setLevel((getLevel() + 1)); // set new level
-			setExpToNextLevel(); // set new needed exp
+			// set new level
+			setLevel((getLevel() + 1));
+			// set new needed exp
+			setExpToNextLevel(); 
 			if (grantSkillPoints()) {
 				addSkillPoints(RCConfig.skillPoints);
 			}
@@ -512,17 +571,23 @@ public class RCPlayer {
 	 * @return hasItems
 	 */
 	public boolean checkForItems() {
-
+		// get all items of itemID
+		// 2304 because thats the max inventory space
 		ItemStack items = new ItemStack(RCConfig.itemID, 2304);
-
+		
 		if (player.getInventory().contains(RCConfig.itemID)) {
-			HashMap<Integer, ItemStack> difference = player.getInventory()
-					.removeItem(items);
+			// remove all items and save how many where not removed
+			// saves 2304 - how many items the player had
+			HashMap<Integer, ItemStack> difference = player.getInventory().removeItem(items);
 			int exp = 0;
 			// change the items for exp
+			// check every stack and how many items this stack had
 			for (ItemStack s : difference.values())
+				// save in exp how many items the stack contained
 				exp += s.getAmount();
+			// take the negative since it doesnt really count how many items where taken
 			exp = 2304 - exp;
+			// finally add the exp
 			addExp(exp);
 			Messaging.sendMessage(player, Language.your + " "
 					+ ChatColor.YELLOW + exp + " " + ChatColor.WHITE
@@ -542,28 +607,28 @@ public class RCPlayer {
 	public boolean lvlup(boolean ignoreItems) {
 
 		// exchanges all items for exp
-		// TODO: make configurable
 		checkForItems();
-		// Without item check
+		// Without exp check
 		if (ignoreItems == true) {
 			if (getLevel() == -1 && getExp() != 0)
 				setExp(0);
 			if (getLevel() == -1) {
 				Messaging.sendMessage(player, Language.cantLevel);
 				return false;
-				// ingore item --> true
+				// ingore exp --> true
 			} else if (nextLevel(true)) {
 				return true;
 			}
 			Messaging.sendMessage(player, Language.reachedMaxLevel);
 			return true;
 		} else {
-			// with item check
+			// with exp check
 			if (hasExpForLevel(getLevel() + 1)) {
 				if (getLevel() == -1) {
 					Messaging.sendMessage(player, Language.cantLevel);
 					return false;
 				}
+				// this is where the player actually levels
 				if (!nextLevel(false)) {
 					Messaging.sendMessage(player, Language.reachedMaxLevel);
 					return false;
@@ -586,6 +651,7 @@ public class RCPlayer {
 	 * LevelUP Check for the PlayerJoin Event
 	 */
 	public void checkLevelUP() {
+		// call the main lvlup method
 		if (lvlup(false)) {
 			Messaging.sendMessage(player, Language.youAreNowLevel + " "
 					+ ChatColor.YELLOW + getLevel());
