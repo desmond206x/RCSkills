@@ -40,9 +40,10 @@ public class RCLogger {
     public static void warning(String message) {
         log.warning(prefix + message);
     }
-
+    // Hallo Silthus
     public static void config(String message) {
         log.config(prefix + message);
+        // Hallo Silthus 2
     }
 
     public static void log(Level level, String message) {
