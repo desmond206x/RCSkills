@@ -9,7 +9,6 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.nfunk.jep.JEP;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.nijikokun.register.payment.methods.iCo5;
@@ -69,7 +68,10 @@ public class RCPlayer {
 	public void setConverted() {
 		this.converted = 1;
 	}
-
+	
+	/**
+	 * Loads all stats of this player from the database
+	 */
 	private void loadStats() {
 		this.player = lvldb.getPlayer();
 		this.playerName = lvldb.getPlayerName();
@@ -83,10 +85,15 @@ public class RCPlayer {
 		this.spendSkillpoints = lvldb.getSpendSkillpoints();
 		this.converted = lvldb.getConverted();
 	}
-
+	
+	/**
+	 * loads the database entry of player
+	 */
 	private void loadLevelDatabase() {
+		// searches for the playername in the databse (can only exist once)
 		lvldb = RCPlayer.plugin.getDatabase().find(DBLevelup.class).where()
 				.ieq("playerName", this.player.getName()).findUnique();
+		// if player joined first time create new colum with standard variables
 		if (lvldb == null) {
 			lvldb = new DBLevelup();
 			lvldb.setPlayer(player);
@@ -101,18 +108,28 @@ public class RCPlayer {
 			lvldb.setConverted(getConverted());
 		}
 	}
-
+	
+	/**
+	 * loads all skills for the player from the database
+	 */
 	private void loadSkillsDatabase() {
 		skills = RCPlayer.plugin.getDatabase().find(DBSkills.class).where()
 				.ieq("playerName", this.player.getName()).findList();
 	}
-
+	
+	/**
+	 * gets the iConomy Account for the player
+	 * can be interacted with loadAccount().*
+	 */
 	private void loadAccount() {
-
 		iCo5 economy = new iCo5();
 		account = economy.getAccount(player.getName());
 	}
-
+	
+	/**
+	 * saves all changes made into the database
+	 * If any variables are added please write them in here too
+	 */
 	public void writeDatabase() {
 		lvldb.setLevel(getLevel());
 		lvldb.setExpToNextLevel(getExpToNextLevel());
@@ -129,7 +146,11 @@ public class RCPlayer {
 	public int getLevel() {
 		return this.level;
 	}
-
+	
+	/**
+	 * sets the new Level and Group
+	 * @param level
+	 */
 	public void setLevel(int level) {
 		String group = "Level" + getLevel();
 		if (RCPermissions.removeParent(player, group)) {
