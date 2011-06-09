@@ -157,6 +157,7 @@ public class RCPlayer {
 			this.level = level;
 			group = "Level" + level;
 			RCPermissions.addParent(player, group);
+			RCPermissions.saveAll();
 		}
 
 	}
