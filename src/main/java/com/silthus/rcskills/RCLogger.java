@@ -40,7 +40,11 @@ public class RCLogger {
     public static void warning(String message) {
         log.warning(prefix + message);
     }
-
+    
+    // Hallo Keiler
+    
+    // Hallo Keiler 2
+    
     public static void config(String message) {
         log.config(prefix + message);
     }
