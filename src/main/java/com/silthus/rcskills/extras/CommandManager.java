@@ -64,7 +64,9 @@ public class CommandManager {
 	public boolean isPlayer(CommandSender sender) {
 		return sender instanceof Player;
 	}
-
+	
+	
+	// Converts the sender into a sender
 	public Player getPlayerOfSender(CommandSender sender) {
 		if (isPlayer(sender))
 			return (Player) sender;
@@ -73,8 +75,10 @@ public class CommandManager {
 	}
 
 	// Gets the player if the current user is actually a player.
+	// TODO: implement sanity check
 	public Player getPlayer(CommandSender sender, String[] args, int index) {
 		if (args.length > index) {
+			// gets all players on the server and filters them for the partial name
 			List<Player> players = sender.getServer().matchPlayer(args[index]);
 
 			if (players.isEmpty()) {
@@ -107,19 +111,17 @@ public class CommandManager {
 	 * @param top
 	 */
 	public void getTopList(int top, CommandSender sender) {
-
+		// gets all int top player order descending from the database
 		PagingList<DBLevelup> pages = plugin.getDatabase()
 				.find(DBLevelup.class).orderBy("level desc")
 				.findPagingList(top);
-
+		// lists the top players
 		if (pages.getTotalPageCount() > 0) {
-			List<DBLevelup> players = pages.getPage(0).getList(); // top 5
+			List<DBLevelup> players = pages.getPage(0).getList();
 			for (int i = 0; i < players.size(); i++) {
 				DBLevelup p = players.get(i);
-				Messaging.sendMessage(
-						sender,
-						(i + 1) + ". " + p.getPlayerName() + " - "
-								+ p.getLevel());
+				Messaging.sendMessage(sender,
+						(i + 1) + ". " + p.getPlayerName() + " - " + p.getLevel());
 			}
 		}
 	}
