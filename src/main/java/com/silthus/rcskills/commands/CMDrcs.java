@@ -86,13 +86,19 @@ public class CMDrcs implements CommandExecutor {
 									+ Language.skillpoints);
 					// Send all bought skills
 					String s = "";
-					for (int i = 0; i < p.getSkills().size(); i++) {
-						if (i == p.getSkills().size() - 1)
-							s += p.getSkill(i).getSkillName() + "";
-						else
-							s += p.getSkill(i).getSkillName() + ", ";
+					if(!p.getSkills().isEmpty())
+					{ 
+						for (int i = 0; i < p.getSkills().size(); i++) {
+							if (i == p.getSkills().size() - 1)
+								s += p.getSkill(i).getSkillName() + "";
+							else
+								s += p.getSkill(i).getSkillName() + ", ";
+						}
+						Messaging.sendMessage("Skills", sender, s);
 					}
-					Messaging.sendMessage("Skills", sender, s);
+					else {
+						Messaging.sendMessage("Skills", sender, Language.noSkills);
+					}
 				} else {
 					Messaging.sendMessage(sender, Language.noPermission);
 				}
