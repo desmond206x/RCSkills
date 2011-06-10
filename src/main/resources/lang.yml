@@ -32,7 +32,7 @@ rcs:
     forTheNextLevel: 'for the next level'
     reachedMaxLevel: 'You already reached the max level.'
 skills:
-    noLeveL: 'You cant buy skills yet.'
+    noLevel: 'You cant buy skills yet.'
     noSkills: 'You didnt buy any skills.'
     youAlreadyHaveThisSkill: 'You already bought this skill.'
     youDontHaveEnough: 'You dont have enough'
