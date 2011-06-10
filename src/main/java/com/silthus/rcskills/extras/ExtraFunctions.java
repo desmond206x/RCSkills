@@ -55,10 +55,12 @@ public class ExtraFunctions {
 				if (page == 1) {
 					for (int i = 0; i < 5; i++) {
 						if (!(array.size() <= i))
-							if (withId)
+							if (withId) {
 								Messaging.sendNoTag(player,
 										array.get(i).getSkillName()+ "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							} else {
 							Messaging.sendNoTag(player,array.get(i).getSkillName());
+							}
 					}
 				} else {
 					// gets all the other pages
@@ -66,10 +68,12 @@ public class ExtraFunctions {
 					page -= 1;
 					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.size() <= i))
-							if (withId)
+							if (withId) {
 								Messaging.sendNoTag(player,
 										array.get(i).getSkillName()+ "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							} else {
 							Messaging.sendNoTag(player,array.get(i).getSkillName());
+							}
 					}
 				}
 			}
@@ -89,9 +93,12 @@ public class ExtraFunctions {
 				if (page == 1) {
 					for (int i = 0; i < 5; i++) {
 						if (!(array.length <= i))
+							if (withId) {
 							Messaging.sendNoTag(player,
 									array[i] + "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
-						Messaging.sendNoTag(player,array[i]);
+							} else {
+									Messaging.sendNoTag(player,array[i]);
+							}
 					}
 				} else {
 					// gets all the other pages
@@ -100,9 +107,12 @@ public class ExtraFunctions {
 					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.length <= i))
 							if (!(array.length <= i))
-								Messaging.sendNoTag(player,
-										array[i] + "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
-							Messaging.sendNoTag(player,array[i]);
+								if (withId) {
+									Messaging.sendNoTag(player,
+											array[i] + "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+									} else {
+											Messaging.sendNoTag(player,array[i]);
+									}
 					}
 				}
 			}
