@@ -393,8 +393,9 @@ public class CMDrcs implements CommandExecutor {
 					p.writeDatabase();
 				}
 				// TODO: rcs.admin.addskill
-				if (cmd.is(args[0], "addskill") && args.length == 3 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.addskill")
-						|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
+				if (cmd.is(args[0], "addskill") && args.length == 3 ) {
+					if (RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.addskill") 
+							|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 					handled = true;
 					this.player = cmd.getPlayer(sender, args, 1);
 					RCPlayer p = new RCPlayer(player);
@@ -446,6 +447,7 @@ public class CMDrcs implements CommandExecutor {
 					}
 
 					p.writeDatabase();
+					}
 				}
 				// TODO: rcs.player.level
 				if (cmd.is(args[0], "lvl") && args.length == 1) {
