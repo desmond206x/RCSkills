@@ -1,5 +1,8 @@
 package com.silthus.rcskills.commands;
 
+import java.nio.charset.Charset;
+import java.text.NumberFormat;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -151,16 +154,18 @@ public class CMDrcs implements CommandExecutor {
 					// lists page two
 					// TODO: check if page two even exists
 					} else if (args.length == 2) {
-						if(p.getBuyableSkills().length > 0){
-							Messaging.sendMessage("Skills",sender,
-										Language.page + " " + Messaging.colorizeText(args[1],ChatColor.YELLOW)
-										+ " " + Language.from + " " + Messaging.colorizeText(
-										"" + ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
-							// checks if the player can buy any skills
-							// TODO: remove when page check is given since its redundent then
-							ExtraFunctions.listPage(p.getBuyableSkills(),player, Integer.parseInt(args[1]));
-						} else {
-							Messaging.sendNoTag(sender, ChatColor.RED + Language.noLevel);
+						if(Character.isDigit(args[1].charAt(0)) && Integer.valueOf(args[1]) <= ExtraFunctions.getPages(p.getBuyableSkills())){
+							if(p.getBuyableSkills().length > 0){
+								Messaging.sendMessage("Skills",sender,
+											Language.page + " " + Messaging.colorizeText(args[1],ChatColor.YELLOW)
+											+ " " + Language.from + " " + Messaging.colorizeText(
+											"" + ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
+								// checks if the player can buy any skills
+								// TODO: remove when page check is given since its redundent then
+								ExtraFunctions.listPage(p.getBuyableSkills(),player, Integer.parseInt(args[1]));
+							} else {
+								Messaging.sendNoTag(sender, ChatColor.RED + Language.noLevel);
+							}
 						}
 					}
 				}
