@@ -62,7 +62,7 @@ public class ExtraFunctions {
 					// gets all the other pages
 					// TODO: fix buggy output since it outputs everything starting at the input page
 					page -= 1;
-					for (int i = page * 5; i < i + 5; i++) {
+					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.size() <= i))
 							Messaging.sendNoTag(player,
 									array.get(i).getSkillName() + "[" + Messaging.colorizeText("" + i, ChatColor.YELLOW) + "]");
@@ -91,7 +91,7 @@ public class ExtraFunctions {
 					// gets all the other pages
 					// TODO: fix buggy output since it outputs everything starting at the input page
 					page -= 1;
-					for (int i = page * 5; i < i + 5; i++) {
+					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.length <= i))
 							Messaging.sendNoTag(player, array[i]);
 					}
