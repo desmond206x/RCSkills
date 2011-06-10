@@ -139,7 +139,7 @@ public class CMDrcs implements CommandExecutor {
 					// if no page is defined continue
 					if (args.length == 1) {
 						// gets if the player can buy any skills
-						if(!p.getBuyableSkills().equals(null)){
+						if(p.getBuyableSkills().length > 0){
 							Messaging.sendMessage(Language.buyableSkills,sender,
 										Language.page+ " "+ Messaging.colorizeText("1",ChatColor.YELLOW)
 										+ " " + Language.from + " "
@@ -151,13 +151,13 @@ public class CMDrcs implements CommandExecutor {
 					// lists page two
 					// TODO: check if page two even exists
 					} else if (args.length == 2) {
-						Messaging.sendMessage("Skills",sender,
-									Language.page + " " + Messaging.colorizeText(args[1],ChatColor.YELLOW)
-									+ " " + Language.from + " " + Messaging.colorizeText(
-									"" + ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
-						// checks if the player can buy any skills
-						// TODO: remove when page check is given since its redundent then
-						if (p.getBuyableSkills() != null && !p.getBuyableSkills().equals(null)) {
+						if(p.getBuyableSkills().length > 0){
+							Messaging.sendMessage("Skills",sender,
+										Language.page + " " + Messaging.colorizeText(args[1],ChatColor.YELLOW)
+										+ " " + Language.from + " " + Messaging.colorizeText(
+										"" + ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
+							// checks if the player can buy any skills
+							// TODO: remove when page check is given since its redundent then
 							ExtraFunctions.listPage(p.getBuyableSkills(),player, Integer.parseInt(args[1]));
 						} else {
 							Messaging.sendNoTag(sender, ChatColor.RED + Language.noLevel);
