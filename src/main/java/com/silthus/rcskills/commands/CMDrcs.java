@@ -90,7 +90,8 @@ public class CMDrcs implements CommandExecutor {
 			// output for /rcs player
 			} else if (cmd.is(args[0], "player")) {
 				// TODO: rcs.admin.info
-				if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")) {
+				if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")
+						|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 					// get the player passed in args[1] from all online players
 					this.player = cmd.getPlayer(sender, args, 1);
 					RCPlayer p = new RCPlayer(this.player);
@@ -258,7 +259,8 @@ public class CMDrcs implements CommandExecutor {
 						}
 					// TODO: rcs.admin.reset
 					} else if (args.length == 3 && cmd.is(args[1], "player")) {
-						if (RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.reset")) {
+						if (RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.reset")
+								|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 							// gets player from list
 							this.player = cmd.getPlayer(sender, args, 2);
 							p = new RCPlayer(player);
@@ -391,7 +393,8 @@ public class CMDrcs implements CommandExecutor {
 					p.writeDatabase();
 				}
 				// TODO: rcs.admin.addskill
-				if (cmd.is(args[0], "addskill") && args.length == 3 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.addskill")) {
+				if (cmd.is(args[0], "addskill") && args.length == 3 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.addskill")
+						|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 					handled = true;
 					this.player = cmd.getPlayer(sender, args, 1);
 					RCPlayer p = new RCPlayer(player);
@@ -444,12 +447,11 @@ public class CMDrcs implements CommandExecutor {
 
 					p.writeDatabase();
 				}
+				// TODO: rcs.player.level
 				if (cmd.is(args[0], "lvl") && args.length == 1) {
 					handled = true;
 					this.player = cmd.getPlayerOfSender(sender);
-					if (player == sender
-							&& RCPermissions.permission(player,
-									"rcs.player.level")) {
+					if (player == sender && RCPermissions.permission(player,"rcs.player.level")) {
 						RCPlayer p = new RCPlayer(player);
 						p.checkForItems();
 						if (p.lvlup(false)) {
@@ -470,8 +472,8 @@ public class CMDrcs implements CommandExecutor {
 					// TODO: rcs.admin.level
 					if (cmd.is(args[1], "player") && args.length == 3) {
 						handled = true;
-						if (RCPermissions.isAdmin(cmd.getPlayerOfSender(sender)) || 
-							RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.level")) {
+						if (RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.level")
+								|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 							this.player = cmd.getPlayer(sender, args, 2);
 							RCPlayer p = new RCPlayer(player);
 							if (p.lvlup(true)) {
@@ -489,7 +491,7 @@ public class CMDrcs implements CommandExecutor {
 				// TODO: rcs.player.level.top
 				if (cmd.is(args[0], "top")) {
 					handled = true;
-					if (cmd.isPlayer(sender)&& RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.player.level.top")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.player.level.top")) {
 						this.player = cmd.getPlayerOfSender(sender);
 						if (args.length == 1) {
 							cmd.getTopList(5, sender);
@@ -512,7 +514,8 @@ public class CMDrcs implements CommandExecutor {
 									+ " " + Language.from + " " + Messaging.colorizeText("" + p.getExpToNextLevel(),ChatColor.YELLOW)
 									+ " EXP " + Language.forTheNextLevel);
 						// TODO: rcs.admin.info
-						} else if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")) {
+						} else if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")
+								|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
 							Messaging.sendMessage(sender,
@@ -543,7 +546,8 @@ public class CMDrcs implements CommandExecutor {
 				// TODO: rcs.reload
 				if (cmd.is(args[0], "reload")) {
 					handled = true;
-					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.reload")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.reload")
+							|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 						RCConfig.load();
 						SkillsConfig.load();
 						Language.load();
@@ -553,7 +557,8 @@ public class CMDrcs implements CommandExecutor {
 				// TODO: rcs.admin.setlvl
 				if (cmd.is(args[0], "setlvl") && args.length > 1) {
 					handled = true;
-					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setlvl")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setlvl")
+							|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
@@ -576,7 +581,8 @@ public class CMDrcs implements CommandExecutor {
 				if (cmd.is(args[0], "setxp") && args.length > 1) {
 					handled = true;
 					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setxp")) {
+							&& RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setxp")
+							|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
@@ -598,10 +604,10 @@ public class CMDrcs implements CommandExecutor {
 					}
 				}
 				// TODO: rcs.admin.setsp
-				if (cmd.is(args[0], "setsp")
-						|| cmd.is(args[0], "setskillpoints") && args.length > 1) {
+				if (cmd.is(args[0], "setsp") || cmd.is(args[0], "setskillpoints") && args.length > 1) {
 					handled = true;
-					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setsp")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setsp")
+							|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
