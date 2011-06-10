@@ -38,7 +38,6 @@ public class RCPlayer {
 	private int skillResetCount = 0;
 	private String lastJoinDate = "01-01-2011";
 	private MethodAccount account;
-	private int converted = 0;
 	private boolean canLevel = true;
 
 	private DBLevelup lvldb = null;
@@ -63,14 +62,6 @@ public class RCPlayer {
 		loadAccount();
 	}
 	
-	public int getConverted() {
-		return this.converted;
-	}
-	
-	public void setConverted() {
-		this.converted = 1;
-	}
-	
 	/**
 	 * Loads all stats of this player from the database
 	 */
@@ -85,7 +76,6 @@ public class RCPlayer {
 		this.skillResetCount = lvldb.getSkillResetCount();
 		this.skillCount = lvldb.getSkillCount();
 		this.spendSkillpoints = lvldb.getSpendSkillpoints();
-		this.converted = lvldb.getConverted();
 	}
 	
 	/**
@@ -112,7 +102,6 @@ public class RCPlayer {
 			lvldb.setSkillResetCount(0);
 			lvldb.setSkillCount(skills.size());
 			lvldb.setSpendSkillpoints(getSpendSkillpoints());
-			lvldb.setConverted(getConverted());
 		}
 	}
 	
@@ -151,7 +140,6 @@ public class RCPlayer {
 		lvldb.setSkillCount(getSkillCount());
 		lvldb.setSkillResetCount(getSkillResetCount());
 		lvldb.setSpendSkillpoints(getSpendSkillpoints());
-		lvldb.setConverted(getConverted());
 		RCPlayer.plugin.getDatabase().save(lvldb);
 	}
 

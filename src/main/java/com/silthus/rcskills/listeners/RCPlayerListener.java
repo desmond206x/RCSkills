@@ -26,14 +26,6 @@ public class RCPlayerListener extends PlayerListener {
 		RCPlayer p = new RCPlayer(player);
 		// TODO: implement clean fix for Admins and Mods
 		if (p.getCanLevel()) {
-		// Convert from old Database
-		if (p.getConverted() == 0) {
-			p.removePermissions();
-			p.setLevel(p.getLevel());
-			p.addSkillPoints((p.getLevel()/RCConfig.skillpointsInterval)*RCConfig.skillPoints);
-			p.setConverted();
-			p.writeDatabase();
-		}
 		// exchanges all items of itemID and then tries to lvlup the player
 		// TODO: make configurable in config
 		if (p.checkForItems()) {
