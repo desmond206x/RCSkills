@@ -65,7 +65,9 @@ public class RCPermissions {
 	 * @return isAdmin
 	 */
 	public static boolean isAdmin(Player player) {
-		return permission(player, "basic.admin");
+		if (permission(player, "rcs.admin") || player.isOp())
+			return true;
+		return false;
 	}
 	
 	/**
