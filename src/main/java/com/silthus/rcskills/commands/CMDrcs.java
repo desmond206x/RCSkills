@@ -390,11 +390,8 @@ public class CMDrcs implements CommandExecutor {
 					// save everything
 					p.writeDatabase();
 				}
-				if (cmd.is(args[0], "addskill")
-						&& args.length == 3
-						&& RCPermissions.permission(
-								cmd.getPlayerOfSender(sender),
-								"rcs.admin.addskill")) {
+				// TODO: rcs.admin.addskill
+				if (cmd.is(args[0], "addskill") && args.length == 3 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.addskill")) {
 					handled = true;
 					this.player = cmd.getPlayer(sender, args, 1);
 					RCPlayer p = new RCPlayer(player);
@@ -405,22 +402,14 @@ public class CMDrcs implements CommandExecutor {
 							try {
 								skill = SkillsConfig.getSingleSkill(id);
 							} catch (ArrayIndexOutOfBoundsException oob) {
-								Messaging
-										.sendMessage(
-												sender,
-												ChatColor.RED
-														+ "There is no skill with that ID!");
+								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that ID!");
 								return handled;
 							}
 						} catch (NumberFormatException e) {
 							if (SkillsConfig.skillsList.contains(args[2])) {
 								skill = SkillsConfig.getSingleSkill(args[2]);
 							} else {
-								Messaging
-										.sendMessage(
-												sender,
-												ChatColor.RED
-														+ "There is no skill with that name!");
+								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that name!");
 								return handled;
 							}
 						}
@@ -435,16 +424,10 @@ public class CMDrcs implements CommandExecutor {
 										+ Language.forThatSkill);
 							} else {
 								if (p.addSkill(skill.getSkillName(), false)) {
-									Messaging.sendMessage(
-											player,
-											Language.YouJustGotSkill
-													+ " '"
-													+ skill.getName()
-													+ "' "
-													+ Language.from + " "
-													+ cmd.getPlayerOfSender(
-															sender).getName()
-													+ " " + Language.bekommen);
+									Messaging.sendMessage(player,
+											Language.YouJustGotSkill + " '" + skill.getName() + "' "
+											+ Language.from + " " 
+											+ cmd.getPlayerOfSender(sender).getName()+ " " + Language.bekommen);
 
 								} else {
 									Messaging.sendMessage(sender, ChatColor.RED
@@ -470,21 +453,13 @@ public class CMDrcs implements CommandExecutor {
 						RCPlayer p = new RCPlayer(player);
 						p.checkForItems();
 						if (p.lvlup(false)) {
-							Messaging.sendMessage(
-									sender,
-									Language.youAreNowLevel + " "
-											+ p.getLevel());
 							Messaging.sendMessage(sender,
-									Language.youGot + " " + ChatColor.YELLOW
-											+ p.getExpToLevel(p.getLevel())
-											+ " EXP " + Language.deducted);
+									Language.youAreNowLevel + " " + p.getLevel());
+							Messaging.sendMessage(sender,
+									Language.youGot + " " + ChatColor.YELLOW + p.getExpToLevel(p.getLevel()) + " EXP " + Language.deducted);
 							Messaging.sendMessage(p.getServer(),
-									player.getName() + " "
-											+ Language.isNowLevel + " "
-											+ ChatColor.YELLOW + p.getLevel());
-							RCLogger.info(player.getName() + " "
-									+ Language.isNowLevel + " " + p.getLevel());
-
+									player.getName() + " " + Language.isNowLevel + " " + ChatColor.YELLOW + p.getLevel());
+							RCLogger.info(player.getName() + " " + Language.isNowLevel + " " + p.getLevel());
 							// Save Changes
 							p.writeDatabase();
 						}
@@ -492,41 +467,29 @@ public class CMDrcs implements CommandExecutor {
 						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				} else if (cmd.is(args[0], "lvl")) {
-					// Put your commands in here
+					// TODO: rcs.admin.level
 					if (cmd.is(args[1], "player") && args.length == 3) {
 						handled = true;
-						if (RCPermissions
-								.isAdmin(cmd.getPlayerOfSender(sender))
-								|| RCPermissions.permission(
-										cmd.getPlayerOfSender(sender),
-										"rcs.admin.level")) {
+						if (RCPermissions.isAdmin(cmd.getPlayerOfSender(sender)) || 
+							RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.level")) {
 							this.player = cmd.getPlayer(sender, args, 2);
 							RCPlayer p = new RCPlayer(player);
 							if (p.lvlup(true)) {
-								Messaging.sendMessage(
-										p.getServer(),
-										player.getName() + " "
-												+ Language.isNowLevel + " "
-												+ ChatColor.YELLOW
-												+ p.getLevel());
-								RCLogger.info(player.getName() + " "
-										+ Language.isNowLevel + " "
-										+ p.getLevel());
+								Messaging.sendMessage(p.getServer(),
+										player.getName() + " " + Language.isNowLevel + " " + ChatColor.YELLOW + p.getLevel());
+								RCLogger.info(player.getName() + " " + Language.isNowLevel + " " + p.getLevel());
 								// Save Changes
 								p.writeDatabase();
 							}
 						} else {
-							Messaging
-									.sendMessage(sender, Language.noPermission);
+							Messaging.sendMessage(sender, Language.noPermission);
 						}
 					}
 				}
+				// TODO: rcs.player.level.top
 				if (cmd.is(args[0], "top")) {
 					handled = true;
-					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(
-									cmd.getPlayerOfSender(sender),
-									"rcs.player.level.top")) {
+					if (cmd.isPlayer(sender)&& RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.player.level.top")) {
 						this.player = cmd.getPlayerOfSender(sender);
 						if (args.length == 1) {
 							cmd.getTopList(5, sender);
@@ -537,54 +500,28 @@ public class CMDrcs implements CommandExecutor {
 						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
+				// TODO: rcs.player.level.exp
 				if (cmd.is(args[0], "xp") || cmd.is(args[0], "exp")) {
 					handled = true;
 					if (cmd.isPlayer(sender)) {
-						if (args.length == 1
-								&& RCPermissions.permission(
-										cmd.getPlayerOfSender(sender),
-										"rcs.player.level.exp")) {
+						if (args.length == 1 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.player.level.exp")) {
 							this.player = cmd.getPlayerOfSender(sender);
 							RCPlayer p = new RCPlayer(player);
-							Messaging.sendMessage(
-									sender,
-									Language.youGot
-											+ " "
-											+ Messaging.colorizeText(
-													"" + p.getExp(),
-													ChatColor.YELLOW)
-											+ " "
-											+ Language.from
-											+ " "
-											+ Messaging.colorizeText(
-													"" + p.getExpToNextLevel(),
-													ChatColor.YELLOW) + " EXP "
-											+ Language.forTheNextLevel);
-						} else if (args.length == 2
-								&& RCPermissions.permission(
-										cmd.getPlayerOfSender(sender),
-										"rcs.admin.info")) {
+							Messaging.sendMessage(sender,
+									Language.youGot + " " + Messaging.colorizeText("" + p.getExp(),ChatColor.YELLOW)
+									+ " " + Language.from + " " + Messaging.colorizeText("" + p.getExpToNextLevel(),ChatColor.YELLOW)
+									+ " EXP " + Language.forTheNextLevel);
+						// TODO: rcs.admin.info
+						} else if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
-							Messaging.sendMessage(
-									sender,
-									Messaging.colorizeText(
-											"" + p.getPlayerName(),
-											ChatColor.YELLOW)
-											+ " "
-											+ Language.has
-											+ " "
-											+ Messaging.colorizeText(
-													"" + p.getExp(),
-													ChatColor.YELLOW)
-											+ " "
-											+ Language.from
-											+ " "
-											+ Messaging.colorizeText(
-													"" + p.getExpToNextLevel(),
-													ChatColor.YELLOW)
-											+ " "
-											+ Language.forTheNextLevel);
+							Messaging.sendMessage(sender,
+									Messaging.colorizeText("" + p.getPlayerName(),ChatColor.YELLOW)
+									+ " " + Language.has + " " + Messaging.colorizeText(
+									"" + p.getExp(),ChatColor.YELLOW)
+									+ " " + Language.from + " " + Messaging.colorizeText(
+									"" + p.getExpToNextLevel(),ChatColor.YELLOW)
+									+ " " + Language.forTheNextLevel);
 						}
 					} else {
 						Messaging.sendMessage(sender, Language.noPermission);
@@ -593,9 +530,7 @@ public class CMDrcs implements CommandExecutor {
 				}
 				if (cmd.is(args[0], "debug")) {
 					handled = true;
-					if (cmd.isPlayer(sender)
-							&& RCPermissions.isAdmin(cmd
-									.getPlayerOfSender(sender))) {
+					if (cmd.isPlayer(sender) && RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 						RCSkills.debugging = !RCSkills.debugging;
 						if (RCSkills.debugging)
 							Messaging.sendMessage(sender,
@@ -605,63 +540,47 @@ public class CMDrcs implements CommandExecutor {
 									"Plugin has stopped debugging.");
 					}
 				}
+				// TODO: rcs.reload
 				if (cmd.is(args[0], "reload")) {
 					handled = true;
-					if (cmd.isPlayer(sender)
-							&& RCPermissions
-									.permission(cmd.getPlayerOfSender(sender),
-											"rcs.reload")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.reload")) {
 						RCConfig.load();
 						SkillsConfig.load();
 						Language.load();
-						Messaging.sendMessage(
-								sender,
-								Messaging.colorizeText(RCSkills.name,
-										ChatColor.GREEN)
-										+ " has been reloaded.");
+						Messaging.sendMessage(sender,Messaging.colorizeText(RCSkills.name,ChatColor.GREEN) + " has been reloaded.");
 					}
 				}
+				// TODO: rcs.admin.setlvl
 				if (cmd.is(args[0], "setlvl") && args.length > 1) {
 					handled = true;
-					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(
-									cmd.getPlayerOfSender(sender),
-									"rcs.admin.setlvl")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setlvl")) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
 							if ((p.getLevel() != -1)) {
 								p.setLevel(Integer.parseInt(args[2]));
-								Messaging.sendMessage(
-										p.getServer(),
-										player.getName() + " "
-												+ Language.isNowLevel + " "
-												+ ChatColor.YELLOW
-												+ p.getLevel());
-								RCLogger.info(player.getName() + " "
-										+ Language.isNowLevel + " "
-										+ p.getLevel());
+								Messaging.sendMessage(p.getServer(),
+										player.getName() + " " + Language.isNowLevel + " " + ChatColor.YELLOW + p.getLevel());
+								RCLogger.info(player.getName() + " " + Language.isNowLevel + " " + p.getLevel());
 								// Save Changes
 								p.writeDatabase();
 							} else {
-								Messaging.sendMessage(sender,
-										Language.cantLevel);
+								Messaging.sendMessage(sender,Language.cantLevel);
 							}
-
 						}
 					} else {
 						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
+				// TODO: rcs.admin.setxp
 				if (cmd.is(args[0], "setxp") && args.length > 1) {
 					handled = true;
 					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(
-									cmd.getPlayerOfSender(sender),
-									"rcs.admin.setxp")) {
+							&& RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setxp")) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
+							// checks if the player is in the "admin level"
 							if ((p.getLevel() != -1)) {
 								p.setExp(Integer.parseInt(args[2]));
 								Messaging.sendMessage(sender, player.getName()
@@ -671,25 +590,22 @@ public class CMDrcs implements CommandExecutor {
 								// Save Changes
 								p.writeDatabase();
 							} else {
-								Messaging.sendMessage(sender,
-										Language.cantLevel);
+								Messaging.sendMessage(sender,Language.cantLevel);
 							}
-
 						}
 					} else {
 						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
+				// TODO: rcs.admin.setsp
 				if (cmd.is(args[0], "setsp")
 						|| cmd.is(args[0], "setskillpoints") && args.length > 1) {
 					handled = true;
-					if (cmd.isPlayer(sender)
-							&& RCPermissions.permission(
-									cmd.getPlayerOfSender(sender),
-									"rcs.admin.setsp")) {
+					if (cmd.isPlayer(sender) && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.setsp")) {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
+							// checks if the player is in the "admin level"
 							if ((p.getLevel() != -1)) {
 								p.setSkillPoints((Integer.parseInt(args[2])));
 								Messaging.sendMessage(sender, player.getName()
@@ -699,57 +615,29 @@ public class CMDrcs implements CommandExecutor {
 								// Save Changes
 								p.writeDatabase();
 							} else {
-								Messaging.sendMessage(sender,
-										Language.cantLevel);
+								Messaging.sendMessage(sender,Language.cantLevel);
 							}
-
 						}
 					} else {
 						Messaging.sendMessage(sender, Language.noPermission);
 					}
 				}
+				// everyone can type /rcs help or /rcs ?
 				if (cmd.is(args[0], "help") || cmd.is(args[0], "?")) {
 					if (args.length == 1) {
-						Messaging
-								.sendMessage(
-										"RCSkills Help",
-										sender,
-										Language.page
-												+ " "
-												+ Messaging.colorizeText(
-														"" + 1,
-														ChatColor.YELLOW)
-												+ " "
-												+ Language.from
-												+ " "
-												+ Messaging.colorizeText(
-														""
-																+ ExtraFunctions
-																		.getPages(help),
-														ChatColor.YELLOW));
-						ExtraFunctions.listPage(help,
-								cmd.getPlayerOfSender(sender), 1);
+						Messaging.sendMessage("RCSkills Help",sender,
+								Language.page + " " + Messaging.colorizeText(
+								"" + 1,ChatColor.YELLOW) + " " + Language.from + " " + Messaging.colorizeText(
+								"" + ExtraFunctions.getPages(help),ChatColor.YELLOW));
+						// lists the help array page 1
+						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender), 1);
 					} else if (args.length == 2) {
-						Messaging
-								.sendMessage(
-										"RCSkills Help",
-										sender,
-										Language.page
-												+ " "
-												+ Messaging.colorizeText(""
-														+ args[1],
-														ChatColor.YELLOW)
-												+ " "
-												+ Language.from
-												+ " "
-												+ Messaging.colorizeText(
-														""
-																+ ExtraFunctions
-																		.getPages(help),
-														ChatColor.YELLOW));
-						ExtraFunctions.listPage(help,
-								cmd.getPlayerOfSender(sender),
-								Integer.parseInt(args[1]));
+						Messaging.sendMessage("RCSkills Help",sender,
+								Language.page + " " + Messaging.colorizeText("" + args[1],ChatColor.YELLOW)
+								+ " " + Language.from + " " + Messaging.colorizeText(
+								"" + ExtraFunctions.getPages(help),ChatColor.YELLOW));
+						// lists the help array page x
+						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender),Integer.parseInt(args[1]));
 					}
 				}
 			}
