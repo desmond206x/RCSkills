@@ -88,7 +88,7 @@ public class CMDrcs implements CommandExecutor {
 					Messaging.sendMessage(sender, Language.noPermission);
 				}
 			// output for /rcs player
-			} else if (cmd.is(args[0], "player")) {
+			} else if (cmd.is(args[0], "player") || cmd.is(args[0], "stats")) {
 				// TODO: rcs.admin.info
 				if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")
 						|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
