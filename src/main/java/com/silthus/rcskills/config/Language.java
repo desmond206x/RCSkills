@@ -100,7 +100,7 @@ public class Language {
 		
 		config = new Configuration(configFile);
 		config.load();
-		if (config.getInt("configversion", 1) < 1) {
+		if (config.getInt("configversion", 2) < 2) {
 			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + langFileName + "_old");
 			if (renameFile.exists())
 				renameFile.delete();

@@ -1,5 +1,5 @@
 # Configversion - DO NOT TOUCH!
-configversion: 1
+configversion: 2
 ######################################################
 help:
     rcs: '- Overview over all stats'
