@@ -367,9 +367,13 @@ public class CMDrcs implements CommandExecutor {
 							} else if (!p.getAccount().hasEnough(skill.getCosts())) {
 								Messaging.sendMessage(sender,Language.youDontHaveEnough + " " + Language.currency);
 							// check for level
-							} else if (!(p.getLevel() >= skill.getLevel())) {
-								Messaging.sendMessage(sender,Language.youNeedLevel + " " + skill.getLevel() + " " + Language.forThatSkill);
 							} else {
+								if (p.getCanLevel()) {
+									if (!(p.getLevel() >= skill.getLevel())) {
+										Messaging.sendMessage(sender,Language.youNeedLevel + " " + skill.getLevel() + " " + Language.forThatSkill);
+										return handled;
+									}
+								}
 								// adds the skill and substracts the money
 								if (p.addSkill(skill.getSkillName(), true)) {
 									p.getAccount().subtract(skill.getCosts());
