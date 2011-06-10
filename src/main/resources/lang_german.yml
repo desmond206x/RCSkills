@@ -1,5 +1,5 @@
 # Configversion - DO NOT TOUCH!
-configversion: 1
+configversion: 2
 ######################################################
 help:
     rcs: '- Übersicht über alle Stats'
@@ -32,7 +32,7 @@ rcs:
     forTheNextLevel: 'für das nächste Level'
     reachedMaxLevel: 'Du hast bereits das maximal Level ereicht'
 skills:
-    noLeveL: 'Du kannst noch keine Skills kaufen'
+    noLevel: 'Du kannst noch keine Skills kaufen'
     noSkills: 'Du hast noch keine Skills gekauft'
     youAlreadyHaveThisSkill: 'Du hast diesen Skill bereits gekauft'
     youDontHaveEnough: 'Du hast nicht genug'
@@ -50,7 +50,7 @@ reset:
     skillpointsBack: 'Skillpunkte zurück.'
     thisIsYour: 'Dies ist dein'
     resetAndCostsYou: 'Reset und kostet dich'
-    confirm: 'Gebe '/rcs reset confirm' ein um alle deine Skills zurückzusetzen.'
+    confirm: 'Gebe /rcs reset confirm ein um alle deine Skills zurückzusetzen.'
     allSkillsReset: 'Alle deine Skills wurden zurückgesetzt und dir wurden'
     allSkillsResetFrom: 'Alle deine Skills wurden von'
     reseted: 'zurückgesetzt'
