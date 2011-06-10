@@ -48,15 +48,17 @@ public class ExtraFunctions {
 	 * @param player
 	 * @param page
 	 */
-	public static void listPage(List<DBSkills> array, Player player, int page) {
+	public static void listPage(List<DBSkills> array, Player player, int page, boolean withId) {
 		if (page != 0) {
 			if (array != null) {
 				// gets page 1
 				if (page == 1) {
 					for (int i = 0; i < 5; i++) {
 						if (!(array.size() <= i))
-							Messaging.sendNoTag(player,
-									array.get(i).getSkillName()+ "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							if (withId)
+								Messaging.sendNoTag(player,
+										array.get(i).getSkillName()+ "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							Messaging.sendNoTag(player,array.get(i).getSkillName());
 					}
 				} else {
 					// gets all the other pages
@@ -64,8 +66,10 @@ public class ExtraFunctions {
 					page -= 1;
 					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.size() <= i))
-							Messaging.sendNoTag(player,
-									array.get(i).getSkillName() + "[" + Messaging.colorizeText("" + i, ChatColor.YELLOW) + "]");
+							if (withId)
+								Messaging.sendNoTag(player,
+										array.get(i).getSkillName()+ "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							Messaging.sendNoTag(player,array.get(i).getSkillName());
 					}
 				}
 			}
@@ -78,14 +82,16 @@ public class ExtraFunctions {
 	 * @param player
 	 * @param page
 	 */
-	public static void listPage(String[] array, Player player, int page) {
+	public static void listPage(String[] array, Player player, int page, boolean withId) {
 		if (page != 0) {
 			if (array != null) {
 				// gets page 1
 				if (page == 1) {
 					for (int i = 0; i < 5; i++) {
 						if (!(array.length <= i))
-							Messaging.sendNoTag(player, array[i]);
+							Messaging.sendNoTag(player,
+									array[i] + "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+						Messaging.sendNoTag(player,array[i]);
 					}
 				} else {
 					// gets all the other pages
@@ -93,7 +99,10 @@ public class ExtraFunctions {
 					page -= 1;
 					for (int i = page * 5; i < ((page * 5) + 5); i++) {
 						if (!(array.length <= i))
-							Messaging.sendNoTag(player, array[i]);
+							if (!(array.length <= i))
+								Messaging.sendNoTag(player,
+										array[i] + "["+ Messaging.colorizeText("" + i,ChatColor.YELLOW) + "]");
+							Messaging.sendNoTag(player,array[i]);
 					}
 				}
 			}

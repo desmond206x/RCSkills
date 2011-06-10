@@ -145,7 +145,7 @@ public class CMDrcs implements CommandExecutor {
 										Language.page+ " "+ Messaging.colorizeText("1",ChatColor.YELLOW)
 										+ " " + Language.from + " "
 										+ Messaging.colorizeText(""+ ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
-							ExtraFunctions.listPage(p.getBuyableSkills(),player, 1);
+							ExtraFunctions.listPage(p.getBuyableSkills(),player, 1, true);
 						} else {
 							Messaging.sendNoTag(sender, ChatColor.RED + Language.noLevel);
 						}
@@ -158,8 +158,7 @@ public class CMDrcs implements CommandExecutor {
 											+ " " + Language.from + " " + Messaging.colorizeText(
 											"" + ExtraFunctions.getPages(p.getBuyableSkills()),ChatColor.YELLOW));
 								// checks if the player can buy any skills
-								// TODO: remove when page check is given since its redundent then
-								ExtraFunctions.listPage(p.getBuyableSkills(),player, Integer.parseInt(args[1]));
+								ExtraFunctions.listPage(p.getBuyableSkills(),player, Integer.parseInt(args[1]), true);
 							} else {
 								Messaging.sendNoTag(sender, ChatColor.RED + Language.noLevel);
 							}
@@ -179,7 +178,7 @@ public class CMDrcs implements CommandExecutor {
 									Language.page + " " + Messaging.colorizeText("1",ChatColor.YELLOW)
 									+ " " + Language.from + " "+ Messaging.colorizeText(
 									"" + ExtraFunctions.getPages(p.getSkills()),ChatColor.YELLOW));
-							ExtraFunctions.listPage(p.getSkills(), player, 1);
+							ExtraFunctions.listPage(p.getSkills(), player, 1, false);
 						} else{
 							Messaging.sendNoTag(sender, ChatColor.RED + Language.noSkills);
 						}
@@ -194,7 +193,7 @@ public class CMDrcs implements CommandExecutor {
 											"" + ExtraFunctions.getPages(p.getSkills()),ChatColor.YELLOW));
 								// checks if the player has any skills
 								// TODO: remove when page check is given since its redundent then
-								ExtraFunctions.listPage(p.getSkills(), player, 1);
+								ExtraFunctions.listPage(p.getSkills(), player, 1, false);
 							} else {
 								Messaging.sendNoTag(sender, ChatColor.RED + Language.noSkills);
 							}
@@ -642,14 +641,14 @@ public class CMDrcs implements CommandExecutor {
 								"" + 1,ChatColor.YELLOW) + " " + Language.from + " " + Messaging.colorizeText(
 								"" + ExtraFunctions.getPages(help),ChatColor.YELLOW));
 						// lists the help array page 1
-						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender), 1);
+						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender), 1, false);
 					} else if (args.length == 2) {
 						Messaging.sendMessage("RCSkills Help",sender,
 								Language.page + " " + Messaging.colorizeText("" + args[1],ChatColor.YELLOW)
 								+ " " + Language.from + " " + Messaging.colorizeText(
 								"" + ExtraFunctions.getPages(help),ChatColor.YELLOW));
 						// lists the help array page x
-						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender),Integer.parseInt(args[1]));
+						ExtraFunctions.listPage(help,cmd.getPlayerOfSender(sender),Integer.parseInt(args[1]), false);
 					}
 				}
 			}
