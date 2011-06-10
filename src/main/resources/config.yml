@@ -25,3 +25,9 @@ DailyExp:
     normalExp: 20
     # How many EXP should players with lvlup.exp.vip get?
     vipExp: 40
+# Configure the groups that are not supposed to level here
+# only needed for groups that have the level permissions
+# Format: groupname: negativeLevel
+dontLevel:
+    Admins: -20
+    Mods: -10

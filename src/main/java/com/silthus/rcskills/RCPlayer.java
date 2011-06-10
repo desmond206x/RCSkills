@@ -39,6 +39,7 @@ public class RCPlayer {
 	private String lastJoinDate = "01-01-2011";
 	private MethodAccount account;
 	private int converted = 0;
+	private boolean canLevel = true;
 
 	private DBLevelup lvldb = null;
 	private List<DBSkills> skills = null;
@@ -52,6 +53,7 @@ public class RCPlayer {
 		this.world = this.player.getWorld();
 		this.server = this.player.getServer();
 		setPlayerName();
+		setCanLevel();
 		// Load the databases
 		loadSkillsDatabase();
 		loadLevelDatabase();
@@ -97,7 +99,12 @@ public class RCPlayer {
 		if (lvldb == null) {
 			lvldb = new DBLevelup();
 			lvldb.setPlayer(player);
-			lvldb.setLevel(0);
+			if (getCanLevel()) {
+				lvldb.setLevel(0);
+			} else {
+				setLevel(-1);
+				lvldb.setLevel(getLevel());
+			}
 			lvldb.setExpToNextLevel(getExpToLevel(getLevel() + 1));
 			lvldb.setExp(0);
 			lvldb.setJoined(this.lastJoinDate);
@@ -131,7 +138,12 @@ public class RCPlayer {
 	 * If any variables are added please write them in here too
 	 */
 	public void writeDatabase() {
-		lvldb.setLevel(getLevel());
+		if (getCanLevel()) {
+			lvldb.setLevel(getLevel());
+		} else {
+			setLevel(-1);
+			lvldb.setLevel(getLevel());
+		}
 		lvldb.setExpToNextLevel(getExpToNextLevel());
 		lvldb.setExp(getExp());
 		lvldb.setJoined(getLastJoinDate());
@@ -152,14 +164,22 @@ public class RCPlayer {
 	 * @param level
 	 */
 	public void setLevel(int level) {
-		String group = "Level" + getLevel();
-		if (RCPermissions.removeParent(player, group)) {
-			this.level = level;
-			group = "Level" + level;
-			RCPermissions.addParent(player, group);
-			RCPermissions.saveAll();
+		if (getCanLevel()) {
+			String group = "Level" + getLevel();
+			if (RCPermissions.removeParent(player, group)) {
+				this.level = level;
+				group = "Level" + level;
+				RCPermissions.addParent(player, group);
+				RCPermissions.saveAll();
+			}
+		} else {
+			String[] parents = RCPermissions.getParents(player);
+			for (String s : parents) {
+				if (RCConfig.dontLevelGroups.containsKey(s)) {
+					this.level = RCConfig.dontLevelGroups.get(s);
+				}
+			}
 		}
-
 	}
 	
 	public void removePermissions() {
@@ -221,6 +241,21 @@ public class RCPlayer {
 
 	public void removeSkillPoints(int points) {
 		this.skillPoints -= points;
+	}
+	
+	public void setCanLevel() {
+		String[] parents = RCPermissions.getParents(player);
+		for (String s : parents) {
+			if (RCConfig.dontLevelGroups.containsKey(s)) {
+				this.canLevel = false;
+				break;
+			}
+		}
+		
+	}
+	
+	public boolean getCanLevel() {
+		return this.canLevel;
 	}
 	
 	/**
@@ -397,6 +432,9 @@ public class RCPlayer {
 	 * @return buyableSkills
 	 */
 	public String[] getBuyableSkills() {
+		if (!getCanLevel()) {
+			return SkillsConfig.skills;
+		}
 		int i = 0;
 		// first get all skills and filter the ones with a too high level
 		for (String s : SkillsConfig.skills) {

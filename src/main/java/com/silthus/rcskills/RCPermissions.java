@@ -1,10 +1,12 @@
 package com.silthus.rcskills;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import com.nijiko.permissions.Entry;
 import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijiko.permissions.User;
@@ -162,6 +164,23 @@ public class RCPermissions {
 		for (String s : perms) {
 			user.removePermission(s);
 		}
+	}
+	
+	/**
+	 * Gets all groups of the player
+	 * @param player
+	 * @return parents
+	 */
+	public static String[] getParents(Player player) {
+		User user = permissionsHandler.getUserObject(player.getWorld().getName(), player.getName());
+		LinkedHashSet<Entry> parents = user.getParents();
+		String[] array = new String[parents.size()];
+		int i = 0;
+		for (Entry s : parents) {
+			array[i] = s.getName();
+			i++;
+		}
+		return array;
 	}
 	
 	/**

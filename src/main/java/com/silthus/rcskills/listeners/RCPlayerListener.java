@@ -25,7 +25,7 @@ public class RCPlayerListener extends PlayerListener {
 		player = event.getPlayer();
 		RCPlayer p = new RCPlayer(player);
 		// TODO: implement clean fix for Admins and Mods
-		if (p.getLevel() != -1) {
+		if (p.getCanLevel()) {
 		// Convert from old Database
 		if (p.getConverted() == 0) {
 			p.removePermissions();
@@ -68,6 +68,9 @@ public class RCPlayerListener extends PlayerListener {
 			}
 		}
 		// save all changes
+		p.writeDatabase();
+	} else {
+		p.setLevel(-1);
 		p.writeDatabase();
 	}
 	}

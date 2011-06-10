@@ -562,7 +562,7 @@ public class CMDrcs implements CommandExecutor {
 						if (args.length == 3) {
 							this.player = cmd.getPlayer(sender, args, 1);
 							RCPlayer p = new RCPlayer(player);
-							if ((p.getLevel() != -1)) {
+							if ((p.getCanLevel())) {
 								p.setLevel(Integer.parseInt(args[2]));
 								Messaging.sendMessage(p.getServer(),
 										player.getName() + " " + Language.isNowLevel + " " + ChatColor.YELLOW + p.getLevel());
