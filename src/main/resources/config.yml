@@ -16,7 +16,8 @@ Skillpoints: 1
 # Configure the formula to calculate EXP for the next level here
 # Use "lvl" variable as the Level you want the xp to be calculated for
 # e.g.: expCalculation: '((((lvl) * (lvl)) - ((lvl) * 5) + 20))'
-expCalculation: '((((lvl) * (lvl)) - ((lvl) * 5) + 20))'
+# ONLY FOR TESTING! IT DOES NOT DO ANYTHING YET!
+# expCalculation: '((((lvl) * (lvl)) - ((lvl) * 5) + 20))'
 # Config for the daily login bonus.
 DailyExp:
     # Set to true if you want to give players a daily exp bonus on their first login.
