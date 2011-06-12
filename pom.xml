@@ -32,13 +32,6 @@
     	<version>3.1.4</version>
     </dependency>
     <dependency>
-    	<groupId>jep</groupId>
-    	<artifactId>jep</artifactId>
-    	<version>2.24</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    </dependency>
-    <dependency>
     	<groupId>cosine</groupId>
     	<artifactId>BOSEconomy</artifactId>
     	<version>10</version>
@@ -57,6 +50,11 @@
     	<groupId>com.nijikokun</groupId>
     	<artifactId>iConomy5</artifactId>
     	<version>10</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.cheffo</groupId>
+    	<artifactId>jeplite</artifactId>
+    	<version>0.8.7</version>
     </dependency>
   </dependencies>
   <repositories>

@@ -9,6 +9,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.cheffo.jeplite.JEP;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
 import com.silthus.rcskills.config.Language;
@@ -511,12 +512,18 @@ public class RCPlayer {
 	 */
 	public int getExpToLevel(int level) {
 		// TODO: replace formula with config
-		/*JEP jep = new JEP();
-		jep.addVariable("lvl", level);
-		jep.parseExpression(RCConfig.expCalc);
-		Object result = jep.getValueAsObject();
-		return (Integer) result;*/
-		return ((((level) * (level)) - ((level) * 5) + 20));
+		int result;
+		try {
+			JEP jep = new JEP();
+			jep.addVariable("lvl", level);
+			jep.parseExpression(RCConfig.expCalc);
+			Object obj = jep.getValue();
+			result = (Integer) obj;
+		} catch (org.cheffo.jeplite.ParseException e) {
+			RCLogger.warning("Could not parse LevelUP formula! Using default...");
+			result = ((((level) * (level)) - ((level) * 5) + 20));
+		}
+		return result;
 	}
 
 	/**
