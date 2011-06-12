@@ -24,46 +24,44 @@ public class RCPlayerListener extends PlayerListener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		player = event.getPlayer();
 		RCPlayer p = new RCPlayer(player);
-		// TODO: implement clean fix for Admins and Mods
 		if (p.getCanLevel()) {
 		// exchanges all items of itemID and then tries to lvlup the player
-		// TODO: make configurable in config
-		if (p.checkForItems()) {
-			p.checkLevelUP();
-		} else if (p.hasExpForLevel(p.getLevel() + 1)) {
-			p.checkLevelUP();
-		}
-		if (RCConfig.useDailyExp == true) {
-			// need to check for vip permissions first
-			if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "rcs.join.vip")) {
-				// adds the daily ration vip exp
-				p.addExp(RCConfig.vipExp);
-				Messaging.sendMessage(player,
-						"Du hast soeben deine tägliche Ration von "
-								+ ChatColor.YELLOW + RCConfig.vipExp
-								+ ChatColor.WHITE + " EXP bekommen.");
-				p.setJoinedToday();
-				// checks for lvlup after the player got exp
+			if (p.checkForItems()) {
 				p.checkLevelUP();
-			} else if (!p.hasJoinedToday()
-					&& RCPermissions.permission(player, "rcs.join.normal")) {
-				// adds the daily ration exp
-				p.addExp(RCConfig.normalExp);
-				Messaging.sendMessage(player,
-						"Du hast soeben deine tägliche Ration von "
-								+ ChatColor.YELLOW + RCConfig.normalExp
-								+ ChatColor.WHITE + " EXP bekommen.");
-				p.setJoinedToday();
-				// checks for lvlup after the player got exp
+			} else if (p.hasExpForLevel(p.getLevel() + 1)) {
 				p.checkLevelUP();
 			}
+			if (RCConfig.useDailyExp == true) {
+				// need to check for vip permissions first
+				if (!p.hasJoinedToday()
+						&& RCPermissions.permission(player, "rcs.join.vip")) {
+					// adds the daily ration vip exp
+					p.addExp(RCConfig.vipExp);
+					Messaging.sendMessage(player,
+							"Du hast soeben deine tägliche Ration von "
+									+ ChatColor.YELLOW + RCConfig.vipExp
+									+ ChatColor.WHITE + " EXP bekommen.");
+					p.setJoinedToday();
+					// checks for lvlup after the player got exp
+					p.checkLevelUP();
+				} else if (!p.hasJoinedToday()
+						&& RCPermissions.permission(player, "rcs.join.normal")) {
+					// adds the daily ration exp
+					p.addExp(RCConfig.normalExp);
+					Messaging.sendMessage(player,
+							"Du hast soeben deine tägliche Ration von "
+								+ ChatColor.YELLOW + RCConfig.normalExp
+								+ ChatColor.WHITE + " EXP bekommen.");
+					p.setJoinedToday();
+					// checks for lvlup after the player got exp
+					p.checkLevelUP();
+				}
+			}
+			// save all changes
+			p.writeDatabase();
+		} else {
+			p.setLevel(-1);
+			p.writeDatabase();
 		}
-		// save all changes
-		p.writeDatabase();
-	} else {
-		p.setLevel(-1);
-		p.writeDatabase();
-	}
 	}
 }
