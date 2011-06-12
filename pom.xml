@@ -20,11 +20,6 @@
 
   <dependencies>
     <dependency>
-    	<groupId>com.nijikokun</groupId>
-    	<artifactId>iConomy</artifactId>
-    	<version>5.0.1</version>
-    </dependency>
-    <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
       <version>0.0.1-SNAPSHOT</version>
@@ -42,6 +37,26 @@
     	<version>2.24</version>
     	<type>jar</type>
     	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>cosine</groupId>
+    	<artifactId>BOSEconomy</artifactId>
+    	<version>10</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.earth2me</groupId>
+    	<artifactId>Essentials</artifactId>
+    	<version>10</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.nijiko.coelho</groupId>
+    	<artifactId>iConomy4</artifactId>
+    	<version>10</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.nijikokun</groupId>
+    	<artifactId>iConomy5</artifactId>
+    	<version>10</version>
     </dependency>
   </dependencies>
   <repositories>

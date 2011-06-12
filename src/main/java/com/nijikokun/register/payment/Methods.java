@@ -40,10 +40,10 @@ public class Methods {
     }
 
     private void _init() {
-//        this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo4());
+        this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo4());
         this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo5());
-//        this.addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE());
-//        this.addMethod("Essentials", new com.nijikokun.register.payment.methods.EE17());
+        this.addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE());
+        this.addMethod("Essentials", new com.nijikokun.register.payment.methods.EE17());
     }
 
     public Set<String> getDependencies() {
@@ -70,7 +70,8 @@ public class Methods {
         return (Method != null);
     }
 
-    public boolean setMethod(Plugin method) {
+    @SuppressWarnings("unused")
+	public boolean setMethod(Plugin method) {
         if(hasMethod()) return true;
         if(self) { self = false; return false; }
 
@@ -88,6 +89,8 @@ public class Methods {
                 this.self = true;
                 manager.enablePlugin(plugin);
             }
+
+            if(plugin == null) continue;
 
             Method current = this.createMethod(plugin);
             if(current == null) continue;

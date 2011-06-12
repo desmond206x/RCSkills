@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
-import com.nijikokun.register.payment.methods.iCo5;
 import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SingleSkill;
@@ -118,8 +117,7 @@ public class RCPlayer {
 	 * can be interacted with getAccount().*
 	 */
 	private void loadAccount() {
-		iCo5 economy = new iCo5();
-		account = economy.getAccount(player.getName());
+		account = RCEconomy.Economy.getAccount(player.getName());
 	}
 	
 	/**
