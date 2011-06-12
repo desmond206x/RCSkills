@@ -29,8 +29,8 @@ import com.silthus.rcskills.listeners.RCPluginListener;
 public class RCSkills extends JavaPlugin {
 
 	private final CommandManager commandManager = new CommandManager(this);
-	private final RCPlayerListener playerListener = new RCPlayerListener(this);
 	private final RCPluginListener pluginListener = new RCPluginListener(this);
+	private final RCPlayerListener playerListener = new RCPlayerListener(this);
 	private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
 
 	public static String name;
@@ -43,31 +43,26 @@ public class RCSkills extends JavaPlugin {
 
 		name = this.getDescription().getName();
 		version = this.getDescription().getVersion();
+		PluginManager pm = getServer().getPluginManager();
 
 		// Logger
 		RCLogger.initialize(Logger.getLogger("Minecraft"));
-
-		PluginManager pm = getServer().getPluginManager();
-		// Makes sure all plugins are correctly loaded.
-		pm.registerEvent(Event.Type.PLUGIN_ENABLE, pluginListener,Priority.Monitor, this);
-		// Register our events
-		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener,Priority.Low, this);
-
 		// Settings
 		RCConfig.initialize(this);
 		SkillsConfig.initialize(this);
 		Language.initialize(this);
-
 		// Database
 		setupDatabase();
 		RCPlayer.initialize(this);
-
 		// Supported plugins
-		RCPermissions.initialize(this);
 		RCEconomy.initialize();
-
+		RCPermissions.initialize(this);
 		// Commands
 		setupCommands();
+		// Makes sure all plugins are correctly loaded.
+		pm.registerEvent(Event.Type.PLUGIN_ENABLE, pluginListener,Priority.Monitor, this);
+		// Register our events
+		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener,Priority.Low, this);
 
 		RCLogger.info(name + " version " + version + " is enabled!");
 

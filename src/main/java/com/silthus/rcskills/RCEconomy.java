@@ -18,7 +18,7 @@ public class RCEconomy {
 	 * Initializes the economy methods
 	 */
 	public static void initialize() {
-		Methods = new Methods();
+		Methods = new Methods("iConomy");
 	}
 
 	/*
