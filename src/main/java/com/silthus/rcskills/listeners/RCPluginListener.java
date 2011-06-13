@@ -22,11 +22,9 @@ public class RCPluginListener extends ServerListener {
 
     @Override
     public void onPluginEnable(PluginEnableEvent event) {
-        if (event.getPlugin() != plugin) {
-            // Try to load again!
-            RCPermissions.onEnable(event.getPlugin());
-            RCEconomy.onEnable(event.getPlugin());
-        }
+    	// Try to load again!
+    	RCPermissions.onEnable(event.getPlugin());
+    	RCEconomy.onEnable(event.getPlugin());
     }
 
     @Override

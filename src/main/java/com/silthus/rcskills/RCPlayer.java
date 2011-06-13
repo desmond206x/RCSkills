@@ -492,7 +492,8 @@ public class RCPlayer {
 	 *            the exp to add
 	 */
 	public void addExp(int exp) {
-		setExp((getExp() + exp));
+		setExp(this.exp + exp);
+		checkLevelUP();
 	}
 
 	/**
@@ -500,7 +501,7 @@ public class RCPlayer {
 	 *            the exp to remove
 	 */
 	public void removeExp(int exp) {
-		setExp((getExp() - exp));
+		setExp(this.exp - exp);
 	}
 
 	/**

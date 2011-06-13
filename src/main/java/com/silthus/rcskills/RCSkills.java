@@ -73,10 +73,6 @@ public class RCSkills extends JavaPlugin {
 	 */
 	private void setupCommands() {
 		// Add command labels here.
-		// For example in "/basic version" and "/basic reload" the label for
-		// both is "basic".
-		// Make your commands in the template.commands package. Each command is
-		// a seperate class.
 		addCommand("rcs", new CMDrcs(this));
 	}
 
