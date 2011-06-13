@@ -428,7 +428,7 @@ public class CMDrcs implements CommandExecutor {
 							if (p.hasSkill(skill)) {
 								Messaging.sendMessage(sender, p.getPlayerName()
 										+ " " + Language.alreadyHasThisSkill);
-							} else if (!(p.getLevel() >= skill.getLevel())) {
+							} else if (!(p.getLevel() >= skill.getLevel()) && p.getCanLevel()) {
 								Messaging.sendMessage(sender, p.getPlayerName()
 										+ " " + Language.needs + " level "
 										+ skill.getLevel() + " "
