@@ -3,8 +3,6 @@ package com.silthus.rcskills.listeners;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
-import org.bukkit.plugin.PluginManager;
-
 import com.silthus.rcskills.RCEconomy;
 import com.silthus.rcskills.RCPermissions;
 import com.silthus.rcskills.RCSkills;

@@ -51,7 +51,6 @@ public class RCPlayer {
 		this.player = player;
 		this.world = this.player.getWorld();
 		this.server = this.player.getServer();
-		setPlayerName();
 		setCanLevel();
 		// Load the databases
 		loadSkillsDatabase();
@@ -59,7 +58,8 @@ public class RCPlayer {
 		// Load the stats of player
 		loadStats();
 		// Load iConomy
-		loadAccount();
+		if (RCEconomy.isEnabled())
+			loadAccount();
 	}
 	
 	/**
@@ -118,7 +118,7 @@ public class RCPlayer {
 	 * can be interacted with getAccount().*
 	 */
 	private void loadAccount() {
-		account = RCEconomy.Economy.getAccount(player.getName());
+		account = RCEconomy.Economy.getAccount(playerName);
 	}
 	
 	/**
@@ -517,8 +517,8 @@ public class RCPlayer {
 			JEP jep = new JEP();
 			jep.addVariable("lvl", level);
 			jep.parseExpression(RCConfig.expCalc);
-			Object obj = jep.getValue();
-			result = (Integer) obj;
+			Double obj = jep.getValue();
+			result = obj.intValue();
 		} catch (org.cheffo.jeplite.ParseException e) {
 			RCLogger.warning("Could not parse LevelUP formula! Using default...");
 			result = ((((level) * (level)) - ((level) * 5) + 20));

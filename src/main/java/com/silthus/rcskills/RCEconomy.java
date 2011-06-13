@@ -13,6 +13,7 @@ public class RCEconomy {
 	
 	public static Methods Methods;
 	public static Method Economy;
+	private static boolean enabled = false;
 
 	/*
 	 * Initializes the economy methods
@@ -31,20 +32,18 @@ public class RCEconomy {
 		if (!RCEconomy.Methods.hasMethod()) {
 			if (RCEconomy.Methods.setMethod(plugin)) {
 				RCEconomy.Economy = RCEconomy.Methods.getMethod();
+				setEnabled();
 				RCLogger.info(RCEconomy.Economy.getName() + " version "
 						+ RCEconomy.Economy.getVersion() + " loaded.");
 			}
 		}
 	}
-	// Sample economy usage
-	// if (TEconomy.Economy.hasBanks()) {
-	// MethodBankAccount bankAccount = TEconomy.Economy.getBankAccount("BANK",
-	// "NAME");
-	// if(bankAccount != null)
-	// bankAccount.add(5000.00);
-	// } else {
-	// MethodAccount account = TEconomy.Economy.getAccount("NAME");
-	// if(account != null)
-	// account.add(5000.00);
-	// }
+	
+	public static boolean isEnabled() {
+		return enabled;
+	}
+	
+	public static void setEnabled() {
+		enabled = true;
+	}
 }

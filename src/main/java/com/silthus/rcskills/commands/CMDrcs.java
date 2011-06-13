@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.silthus.rcskills.RCEconomy;
 import com.silthus.rcskills.RCLogger;
 import com.silthus.rcskills.RCPermissions;
 import com.silthus.rcskills.RCPlayer;
@@ -64,6 +65,7 @@ public class CMDrcs implements CommandExecutor {
 							+ Messaging.colorizeText( "" + p.getExpToNextLevel(),ChatColor.YELLOW)
 							+ " " + Language.experiance);
 					// send money
+					if (RCEconomy.isEnabled())
 					Messaging.sendMessage("Money",sender,
 							Messaging.colorizeText(""+ p.getAccount().balance(),ChatColor.YELLOW)
 									+ " " + Language.currency);
@@ -107,6 +109,7 @@ public class CMDrcs implements CommandExecutor {
 									+ Messaging.colorizeText("" + p.getExpToNextLevel(),ChatColor.YELLOW)
 									+ " " + Language.experiance);
 					// send money
+					if (RCEconomy.isEnabled())
 					Messaging.sendMessage("Money",sender,
 							Messaging.colorizeText(""+ p.getAccount().balance(),ChatColor.YELLOW)
 									+ " " + Language.currency);
@@ -233,7 +236,7 @@ public class CMDrcs implements CommandExecutor {
 							Messaging.sendMessage(sender,Language.noResetSkills);
 							return handled;
 						// not enough money
-						} else if (!p.getAccount().hasEnough(p.getResetCost())) {
+						} else if (RCEconomy.isEnabled() && !p.getAccount().hasEnough(p.getResetCost())) {
 							Messaging.sendMessage(sender,Language.youDontHaveEnough + " " + Language.currency);
 						// else reset skills
 						} else {
@@ -363,7 +366,7 @@ public class CMDrcs implements CommandExecutor {
 							} else if (!p.hasEnoughSkillpoints(skill.getSkillpoints())) {
 								Messaging.sendMessage(sender,Language.youDontHaveEnough + " " + Language.skillpoints);
 							// check for money
-							} else if (!p.getAccount().hasEnough(skill.getCosts())) {
+							} else if (RCEconomy.isEnabled() && !p.getAccount().hasEnough(skill.getCosts())) {
 								Messaging.sendMessage(sender,Language.youDontHaveEnough + " " + Language.currency);
 							// check for level
 							} else {
@@ -375,7 +378,8 @@ public class CMDrcs implements CommandExecutor {
 								}
 								// adds the skill and substracts the money
 								if (p.addSkill(skill.getSkillName(), true)) {
-									p.getAccount().subtract(skill.getCosts());
+									if (RCEconomy.isEnabled())
+										p.getAccount().subtract(skill.getCosts());
 									
 									Messaging.sendMessage(sender,Language.youJustBought + ": " + skill.getName());
 									Messaging.sendMessage(sender,Language.youGot+ " " + Messaging.colorizeText(
