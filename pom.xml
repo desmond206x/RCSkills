@@ -23,40 +23,64 @@
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-      <type>jar</type>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-    	<groupId>com.nijikokun</groupId>
-    	<artifactId>Permissions</artifactId>
-    	<version>3.1.4</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/bukkit-0.0.1-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
     	<groupId>cosine</groupId>
     	<artifactId>BOSEconomy</artifactId>
-    	<version>10</version>
+    	<version>6.0.2</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/BOSEconomy.jar</systemPath>
     </dependency>
     <dependency>
     	<groupId>com.earth2me</groupId>
     	<artifactId>Essentials</artifactId>
-    	<version>10</version>
+    	<version>2.3.3</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/Essentials.jar</systemPath>
     </dependency>
     <dependency>
     	<groupId>com.nijiko.coelho</groupId>
     	<artifactId>iConomy4</artifactId>
-    	<version>10</version>
+    	<version>4.x</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/iCo4.jar</systemPath>
     </dependency>
     <dependency>
     	<groupId>com.nijikokun</groupId>
     	<artifactId>iConomy5</artifactId>
-    	<version>10</version>
+    	<version>5.0.1</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/iCo5.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>com.nijikokun</groupId>
+    	<artifactId>Permissions</artifactId>
+    	<version>3.1.5b</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/Permissions.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>Register</groupId>
+    	<artifactId>Register</artifactId>
+    	<version>1.8</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
     </dependency>
     <dependency>
     	<groupId>org.cheffo</groupId>
     	<artifactId>jeplite</artifactId>
-    	<version>0.8.7</version>
+    	<version>0.8.7a</version>
+    	<type>jar</type>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/jeplite.jar</systemPath>
     </dependency>
   </dependencies>
+  <build>
+  	<plugins>
+  	</plugins>
+  </build>
   <repositories>
  <repository>
   <id>Permissions</id>

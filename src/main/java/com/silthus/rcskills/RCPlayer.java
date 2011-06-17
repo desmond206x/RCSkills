@@ -520,7 +520,7 @@ public class RCPlayer {
 			jep.parseExpression(RCConfig.expCalc);
 			Double obj = jep.getValue();
 			result = obj.intValue();
-		} catch (org.cheffo.jeplite.ParseException e) {
+		} catch (Exception e) {
 			RCLogger.warning("Could not parse LevelUP formula! Using default...");
 			result = ((((level) * (level)) - ((level) * 5) + 20));
 		}
