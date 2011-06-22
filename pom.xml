@@ -4,7 +4,7 @@
 
   <groupId>com.silthus</groupId>
   <artifactId>RCSkills</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.2</version>
   <packaging>jar</packaging>
 
   <name>RCSkills</name>
@@ -20,44 +20,37 @@
 
   <dependencies>
     <dependency>
-    	<groupId>cosine</groupId>
-    	<artifactId>BOSEconomy</artifactId>
-    	<version>6.0.2</version>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/BOSEconomy.jar</systemPath>
-    </dependency>
-    <dependency>
-    	<groupId>com.earth2me</groupId>
-    	<artifactId>Essentials</artifactId>
-    	<version>2.3.3</version>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/Essentials.jar</systemPath>
-    </dependency>
-    <dependency>
-    	<groupId>com.nijiko.coelho</groupId>
-    	<artifactId>iConomy4</artifactId>
-    	<version>4.x</version>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/iCo4.jar</systemPath>
-    </dependency>
-    <dependency>
-    	<groupId>com.nijikokun</groupId>
-    	<artifactId>iConomy5</artifactId>
-    	<version>5.0.1</version>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/iCo5.jar</systemPath>
+    	<groupId>org.bukkit</groupId>
+    	<artifactId>bukkit</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    	<scope>compile</scope>
     </dependency>
     <dependency>
     	<groupId>com.nijikokun</groupId>
     	<artifactId>Permissions</artifactId>
     	<version>3.1.5b</version>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/Permissions.jar</systemPath>
+    	<type>jar</type>
+    	<scope>compile</scope>
     </dependency>
     <dependency>
-    	<groupId>org.bukkit</groupId>
-    	<artifactId>bukkit</artifactId>
+    	<groupId>iConomy5</groupId>
+    	<artifactId>iConomy5</artifactId>
+    	<version>5.01</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>Register</groupId>
+    	<artifactId>Register</artifactId>
+    	<version>1.8</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>JEPLite</groupId>
+    	<artifactId>JEPLite</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
+    	<type>jar</type>
     	<scope>compile</scope>
     </dependency>
   </dependencies>

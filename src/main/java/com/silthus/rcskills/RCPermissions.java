@@ -77,8 +77,8 @@ public class RCPermissions {
 	 * @param player
 	 * @return
 	 */
-	public static String getPrimaryGroup(Player player) {
-		return permissionsHandler.getPrimaryGroup(player.getWorld().getName(), player.getName());
+	public static String[] getGroups(Player player) {
+		return permissionsHandler.getGroups(player.getWorld().getName(), player.getName());
 	}
 	
 	/**

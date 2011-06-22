@@ -2,6 +2,8 @@ package com.silthus.rcskills;
 
 import org.bukkit.plugin.Plugin;
 
+import com.nijikokun.register.payment.*;
+
 /**
  * @description Handles the economics of the plugin
  * @author Tagette
@@ -16,7 +18,7 @@ public class RCEconomy {
 	 * Initializes the economy methods
 	 */
 	public static void initialize() {
-		Methods = new Methods("iConomy");
+		Methods = new Methods();
 	}
 
 	/*
