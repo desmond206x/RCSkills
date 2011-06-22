@@ -2,9 +2,6 @@ package com.silthus.rcskills;
 
 import org.bukkit.plugin.Plugin;
 
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Methods;
-
 /**
  * @description Handles the economics of the plugin
  * @author Tagette

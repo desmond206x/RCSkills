@@ -20,13 +20,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>bukkit</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/lib/bukkit-0.0.1-SNAPSHOT.jar</systemPath>
-    </dependency>
-    <dependency>
     	<groupId>cosine</groupId>
     	<artifactId>BOSEconomy</artifactId>
     	<version>6.0.2</version>
@@ -62,19 +55,10 @@
     	<systemPath>${project.basedir}/lib/Permissions.jar</systemPath>
     </dependency>
     <dependency>
-    	<groupId>Register</groupId>
-    	<artifactId>Register</artifactId>
-    	<version>1.8</version>
-    	<type>jar</type>
+    	<groupId>org.bukkit</groupId>
+    	<artifactId>bukkit</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
     	<scope>compile</scope>
-    </dependency>
-    <dependency>
-    	<groupId>org.cheffo</groupId>
-    	<artifactId>jeplite</artifactId>
-    	<version>0.8.7a</version>
-    	<type>jar</type>
-    	<scope>system</scope>
-    	<systemPath>${project.basedir}/lib/jeplite.jar</systemPath>
     </dependency>
   </dependencies>
   <build>

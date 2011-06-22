@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.cheffo.jeplite.JEP;
 
-import com.nijikokun.register.payment.Method.MethodAccount;
 import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SingleSkill;
