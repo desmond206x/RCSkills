@@ -111,9 +111,11 @@ public class RCConfig {
 	}
 	
 	private static void setGroupsLevel(List<String> groups) {
-		for (String s : groups) {
-			// put every group and their level into the HashMap
-			RCConfig.dontLevelGroups.put(s, config.getInt("dontLevel." + s, -1));
+		if (groups != null) {
+			for (String s : groups) {
+				// put every group and their level into the HashMap
+				RCConfig.dontLevelGroups.put(s, config.getInt("dontLevel." + s, -1));
+			}
 		}
 	}
 }
