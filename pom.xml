@@ -40,18 +40,21 @@
     	<scope>compile</scope>
     </dependency>
     <dependency>
-    	<groupId>Register</groupId>
-    	<artifactId>Register</artifactId>
-    	<version>1.8</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    </dependency>
-    <dependency>
     	<groupId>JEPLite</groupId>
     	<artifactId>JEPLite</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     	<type>jar</type>
     	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>com.earth2me</groupId>
+    	<artifactId>Essentials</artifactId>
+    	<version>2.3</version>
+    </dependency>
+    <dependency>
+    	<groupId>cosine</groupId>
+    	<artifactId>BOSEconomy</artifactId>
+    	<version>6.0.2</version>
     </dependency>
   </dependencies>
   <build>

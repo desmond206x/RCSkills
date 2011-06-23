@@ -2,7 +2,7 @@ package com.silthus.rcskills;
 
 import org.bukkit.plugin.Plugin;
 
-import com.nijikokun.register.payment.*;
+import com.silthus.register.payment.*;
 
 /**
  * @description Handles the economics of the plugin

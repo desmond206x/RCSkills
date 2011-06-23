@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.cheffo.jeplite.JEP;
 
-import com.nijikokun.register.payment.Method.MethodAccount;
 import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
 import com.silthus.rcskills.config.SingleSkill;
@@ -20,6 +19,7 @@ import com.silthus.rcskills.database.DBLevelup;
 import com.silthus.rcskills.database.DBSkills;
 import com.silthus.rcskills.extras.ExtraFunctions;
 import com.silthus.rcskills.extras.Messaging;
+import com.silthus.register.payment.Method.MethodAccount;
 
 public class RCPlayer {
 
