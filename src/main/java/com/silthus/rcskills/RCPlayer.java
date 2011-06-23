@@ -9,7 +9,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.cheffo.jeplite.JEP;
+import org.nfunk.jep.JEP;
 
 import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
@@ -39,6 +39,7 @@ public class RCPlayer {
 	private String lastJoinDate = "01-01-2011";
 	private MethodAccount account;
 	private boolean canLevel = true;
+	private JEP jep = null;
 
 	private DBLevelup lvldb = null;
 	private List<DBSkills> skills = null;
@@ -52,6 +53,8 @@ public class RCPlayer {
 		this.world = this.player.getWorld();
 		this.server = this.player.getServer();
 		setCanLevel();
+		// load JEP
+		jep = new JEP();
 		// Load the databases
 		loadSkillsDatabase();
 		loadLevelDatabase();
@@ -515,9 +518,8 @@ public class RCPlayer {
 		// TODO: replace formula with config
 		int result;
 		try {
-			JEP jep = new JEP();
-			jep.addVariable("lvl", level);
-			jep.parseExpression(RCConfig.expCalc);
+			this.jep.addVariable("lvl", level);
+			this.jep.parseExpression(RCConfig.expCalc);
 			Double obj = jep.getValue();
 			result = obj.intValue();
 		} catch (Exception e) {
