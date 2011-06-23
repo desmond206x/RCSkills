@@ -9,7 +9,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.nfunk.jep.JEP;
+import org.cheffo.jeplite.JEP;
 
 import com.silthus.rcskills.config.Language;
 import com.silthus.rcskills.config.RCConfig;
