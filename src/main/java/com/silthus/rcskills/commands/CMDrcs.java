@@ -448,7 +448,7 @@ public class CMDrcs implements CommandExecutor {
 							}
 						} catch (NullPointerException e) {
 							Messaging.sendMessage(sender, ChatColor.RED
-									+ "There is no skill with that name!");
+									+ Language.noSkillName);
 							return handled;
 						}
 					}
