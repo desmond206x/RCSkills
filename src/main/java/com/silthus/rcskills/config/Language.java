@@ -78,6 +78,8 @@ public class Language {
 	public static String youAreNowLevel;
 	public static String cantLevel;
 	public static String youOnlyHave;
+	public static String noSkillName;
+	public static String noSkillID;
 	
 	public static void initialize(RCSkills instance) {
 		Language.plugin = instance;
@@ -100,7 +102,7 @@ public class Language {
 		
 		config = new Configuration(configFile);
 		config.load();
-		if (config.getInt("configversion", 2) < 2) {
+		if (config.getInt("configversion", 2) < 3) {
 			File renameFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + langFileName + "_old");
 			if (renameFile.exists())
 				renameFile.delete();
@@ -195,5 +197,7 @@ public class Language {
 		Language.bekommen = file.getString("admin.bekommen");
 		Language.youAreNowLevel = file.getString("admin.youAreNowLevel");
 		Language.cantLevel = file.getString("admin.cantLevel");
+		Language.noSkillName = file.getString("admin.noSkillName");
+		Language.noSkillID = file.getString("admin.noSkillID");
 	}
 }

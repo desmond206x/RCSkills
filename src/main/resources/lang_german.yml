@@ -1,5 +1,5 @@
 # Configversion - DO NOT TOUCH!
-configversion: 2
+configversion: 3
 ######################################################
 help:
     rcs: '- Übersicht über alle Stats'
@@ -61,4 +61,6 @@ admin:
     bekommen: 'bekommen'
     youAreNowLevel: 'Du bist nun Level'
     cantLevel: 'Spieler in dieser Gruppe können nicht leveln'
+    noSkillName: 'Es existiert kein Skill mit diesem Namen!'
+    noSkillID: 'Es existiert kein Skill mit dieser ID!'
     

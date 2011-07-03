@@ -413,14 +413,14 @@ public class CMDrcs implements CommandExecutor {
 							try {
 								skill = SkillsConfig.getSingleSkill(id);
 							} catch (ArrayIndexOutOfBoundsException oob) {
-								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that ID!");
+								Messaging.sendMessage(sender,ChatColor.RED + Language.noSkillID);
 								return handled;
 							}
 						} catch (NumberFormatException e) {
 							if (SkillsConfig.skillsList.contains(args[2])) {
 								skill = SkillsConfig.getSingleSkill(args[2]);
 							} else {
-								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that name!");
+								Messaging.sendMessage(sender,ChatColor.RED + Language.noSkillName);
 								return handled;
 							}
 						}
