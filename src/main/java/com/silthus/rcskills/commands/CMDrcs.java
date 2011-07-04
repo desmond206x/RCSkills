@@ -95,40 +95,55 @@ public class CMDrcs implements CommandExecutor {
 				if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")
 						|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
 					// get the player passed in args[1] from all online players
+					RCPlayer p = null;
 					this.player = cmd.getPlayer(sender, args, 1);
-					RCPlayer p = new RCPlayer(this.player);
-					// send header
-					Messaging.sendNoTag(sender,
-							"##### " + Messaging.colorizeText(player.getName() + "'s Stats", ChatColor.YELLOW) + " #####");
-					// send level
-					Messaging.sendMessage("Level", sender, "Level "
-							+ ChatColor.YELLOW + p.getLevel());
-					// send exp
-					Messaging.sendMessage("EXP",sender,
-							Messaging.colorizeText("" + p.getExp(),ChatColor.YELLOW) + "/"
-									+ Messaging.colorizeText("" + p.getExpToNextLevel(),ChatColor.YELLOW)
-									+ " " + Language.experiance);
-					// send money
-					if (RCEconomy.isEnabled())
-					Messaging.sendMessage("Money",sender,
-							Messaging.colorizeText(""+ p.getAccount().balance(),ChatColor.YELLOW)
-									+ " " + Language.currency);
-					// send skillpoints
-					Messaging.sendMessage(Language.skillpoints,sender,
-							Messaging.colorizeText("" + p.getSkillPoints(),ChatColor.YELLOW)
-									+ " " + Language.skillpoints);
-					// Send all bought skills
-					// TODO: create extra method
-					if(!p.getSkills().isEmpty()) {
-						// get all skills
-						String s = "";
-						for (int i = 0; i < p.getSkills().size(); i++) {
-							if (i == p.getSkills().size() - 1)
-								s += p.getSkill(i).getSkillName() + "";
-							else
-								s += p.getSkill(i).getSkillName() + ", ";
+					// -> Looking in Database
+					if(this.player==null){
+						if(cmd.playerExists(args[1])){
+							p = cmd.getRCPlayerFromDB(args[1]);
 						}
-						Messaging.sendMessage("Skills", sender, s);
+						else{
+							sender.sendMessage(args[1] + " " + Language.notExist);
+							p = null;
+						}
+					}
+					else{
+						p = new RCPlayer(player);
+					}
+					if(p!=null){
+						// send header
+						Messaging.sendNoTag(sender,
+								"##### " + Messaging.colorizeText(args[1] + "'s Stats", ChatColor.YELLOW) + " #####");
+						// send level
+						Messaging.sendMessage("Level", sender, "Level "
+								+ ChatColor.YELLOW + p.getLevel());
+						// send exp
+						Messaging.sendMessage("EXP",sender,
+								Messaging.colorizeText("" + p.getExp(),ChatColor.YELLOW) + "/"
+										+ Messaging.colorizeText("" + p.getExpToNextLevel(),ChatColor.YELLOW)
+										+ " " + Language.experiance);
+						// send money
+						if (RCEconomy.isEnabled())
+						Messaging.sendMessage("Money",sender,
+								Messaging.colorizeText(""+ p.getAccount().balance(),ChatColor.YELLOW)
+										+ " " + Language.currency);
+						// send skillpoints
+						Messaging.sendMessage(Language.skillpoints,sender,
+								Messaging.colorizeText("" + p.getSkillPoints(),ChatColor.YELLOW)
+										+ " " + Language.skillpoints);
+						// Send all bought skills
+						// TODO: create extra method
+						if(!p.getSkills().isEmpty()) {
+							// get all skills
+							String s = "";
+							for (int i = 0; i < p.getSkills().size(); i++) {
+								if (i == p.getSkills().size() - 1)
+									s += p.getSkill(i).getSkillName() + "";
+								else
+									s += p.getSkill(i).getSkillName() + ", ";
+							}
+							Messaging.sendMessage("Skills", sender, s);
+						}
 					}
 				} else {
 					Messaging.sendMessage(sender, Language.noPermission);
@@ -525,15 +540,30 @@ public class CMDrcs implements CommandExecutor {
 						// TODO: rcs.admin.info
 						} else if (args.length == 2 && RCPermissions.permission(cmd.getPlayerOfSender(sender),"rcs.admin.info")
 								|| RCPermissions.isAdmin(cmd.getPlayerOfSender(sender))) {
+							RCPlayer p = null;
 							this.player = cmd.getPlayer(sender, args, 1);
-							RCPlayer p = new RCPlayer(player);
-							Messaging.sendMessage(sender,
-									Messaging.colorizeText("" + p.getPlayerName(),ChatColor.YELLOW)
-									+ " " + Language.has + " " + Messaging.colorizeText(
-									"" + p.getExp(),ChatColor.YELLOW)
-									+ " " + Language.from + " " + Messaging.colorizeText(
-									"" + p.getExpToNextLevel(),ChatColor.YELLOW)
-									+ " " + Language.forTheNextLevel);
+							// -> Looking in Database
+							if(this.player==null){
+								if(cmd.playerExists(args[1])){
+									p = cmd.getRCPlayerFromDB(args[1]);
+								}
+								else{
+									sender.sendMessage(args[1] + " " + Language.notExist);
+									p = null;
+								}
+							}
+							else{
+								p = new RCPlayer(player);
+							}
+							if(p!=null){
+								Messaging.sendMessage(sender,
+										Messaging.colorizeText("" + p.getPlayerName(),ChatColor.YELLOW)
+										+ " " + Language.has + " " + Messaging.colorizeText(
+										"" + p.getExp(),ChatColor.YELLOW)
+										+ " " + Language.from + " " + Messaging.colorizeText(
+										"" + p.getExpToNextLevel(),ChatColor.YELLOW)
+										+ " " + Language.forTheNextLevel);
+							}
 						}
 					} else {
 						Messaging.sendMessage(sender, Language.noPermission);
