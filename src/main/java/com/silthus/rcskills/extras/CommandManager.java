@@ -1,5 +1,6 @@
 package com.silthus.rcskills.extras;
 
+import java.io.FileInputStream;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.avaje.ebean.PagingList;
+import com.silthus.rcskills.RCPlayer;
 import com.silthus.rcskills.RCSkills;
 import com.silthus.rcskills.database.DBLevelup;
 
@@ -82,7 +84,8 @@ public class CommandManager {
 			List<Player> players = sender.getServer().matchPlayer(args[index]);
 
 			if (players.isEmpty()) {
-				sender.sendMessage("I don't know who '" + args[index] + "' is!");
+				sender.sendMessage("Player '" + args[index] + "' offline!");
+				sender.sendMessage("Looking in Database!");
 				return null;
 			} else {
 				return players.get(0);
@@ -94,6 +97,25 @@ public class CommandManager {
 				return (Player) sender;
 			}
 		}
+	}
+	
+	public RCPlayer getRCPlayerFromDB(String name)
+	{
+		RCPlayer player = new RCPlayer(name);
+		return player;
+	}
+	
+	public boolean playerExists(String name)
+	{
+	   try
+	   {
+	      FileInputStream test = new FileInputStream("world/players/"+name+".dat");
+	   }
+	   catch (Exception e)
+	   {
+	      return false;
+	   }
+	  return true;
 	}
 
 	public String join(String[] split, String delimiter) {
