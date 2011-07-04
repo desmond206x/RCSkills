@@ -65,10 +65,28 @@ public class RCPlayer {
 			loadAccount();
 	}
 	
+	public RCPlayer(String name) {
+		lvldb = RCPlayer.plugin.getDatabase().find(DBLevelup.class).where()
+		.ieq("playerName", name).findUnique();
+		this.playerName = name;
+		this.level = lvldb.getLevel();
+		this.exp = lvldb.getExp();
+		this.expToNextLevel = lvldb.getExpToNextLevel();
+		this.lastJoinDate = lvldb.getJoined();
+		this.skillPoints = lvldb.getSkillpoints();
+		this.skillResetCount = lvldb.getSkillResetCount();
+		this.skillCount = lvldb.getSkillCount();
+		this.spendSkillpoints = lvldb.getSpendSkillpoints();
+		skills = RCPlayer.plugin.getDatabase().find(DBSkills.class).where()
+			.ieq("playerName", name).findList();
+		if (RCEconomy.isEnabled())
+			loadAccount();
+	}
+	
 	/**
 	 * Loads all stats of this player from the database
 	 */
-	private void loadStats() {
+	public void loadStats() {
 		this.player = lvldb.getPlayer();
 		this.playerName = lvldb.getPlayerName();
 		this.level = lvldb.getLevel();
@@ -515,7 +533,6 @@ public class RCPlayer {
 	 * @return exp
 	 */
 	public int getExpToLevel(int level) {
-		// TODO: replace formula with config
 		int result;
 		try {
 			this.jep.addVariable("lvl", level);
