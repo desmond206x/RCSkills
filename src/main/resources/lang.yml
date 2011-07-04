@@ -43,6 +43,8 @@ skills:
     youNeedLevel: 'You need level'
     forThatSkill: 'for this skill.'
     youJustBought: 'You just bought'
+    group: 'Group'
+    notExist: 'does not exist!'
 reset:
     noResetSkills: 'You have no skills that you can reset.'
     resetWarning: 'Are you sure that you want to reset all of your skills?'
@@ -55,6 +57,7 @@ reset:
     allSkillsResetFrom: 'All of your skills have been reset by'
     # Use only for german or other language
     reseted: ''
+    cantReset: 'Could not remove Skill! Already removed?!'
 admin:
     alreadyHasThisSkill: 'already has this skill.'
     YouJustGotSkill: 'You just got the skill'

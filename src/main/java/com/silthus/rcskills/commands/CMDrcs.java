@@ -256,7 +256,7 @@ public class CMDrcs implements CommandExecutor {
 								p.writeDatabase();
 							} else {
 								Messaging.sendMessage(sender,
-										ChatColor.RED + "Could not remove Skill! Already removed?!");
+										ChatColor.RED + Language.cantReset);
 							}
 						}
 					// TODO: rcs.admin.reset
@@ -287,8 +287,7 @@ public class CMDrcs implements CommandExecutor {
 									p.writeDatabase();
 								} else {
 									Messaging.sendMessage(sender,
-											// TODO: create option in lang.yml
-											ChatColor.RED + "Could not remove Skill! Already removed?!");
+											ChatColor.RED + Language.cantReset);
 								}
 							}
 						}
@@ -309,7 +308,7 @@ public class CMDrcs implements CommandExecutor {
 								skill = SkillsConfig.getSingleSkill(id);
 							} catch (NullPointerException n) {
 								Messaging.sendMessage(sender,
-										ChatColor.RED + "There is now Skill with that ID!");
+										ChatColor.RED + Language.noSkillID);
 								return handled;
 							}
 						} catch (Exception e) {
@@ -317,7 +316,7 @@ public class CMDrcs implements CommandExecutor {
 								skill = SkillsConfig.getSingleSkill(args[1]);
 							} else {
 								Messaging.sendMessage(sender,
-										ChatColor.RED + "There is no skill with that name!");
+										ChatColor.RED + Language.noSkillName);
 								return handled;
 							}
 						}
@@ -325,12 +324,13 @@ public class CMDrcs implements CommandExecutor {
 							Messaging.sendNoTag(sender,"##### " + Messaging.colorizeText(skill.getSkillName(),ChatColor.YELLOW) + " #####");
 							Messaging.sendMessage("Name",sender,skill.getName() + " " + "[" + Messaging.colorizeText(skill.getId() + "",ChatColor.YELLOW) + "]");
 							Messaging.sendMessage(Language.description, sender,skill.getDescription());
-							Messaging.sendMessage(Language.costs, sender,"Kostet " + skill.getCosts() + " Coins");
+							Messaging.sendMessage(Language.costs, sender, skill.getCosts() + " " + Language.currency);
+							//TODO Add Level, Name and Skillpoints to Language File. 
 							Messaging.sendMessage("Level",sender,Language.needs + " level " + skill.getLevel());
 							Messaging.sendMessage("Skillpoints",sender,Language.needs + " " + skill.getSkillpoints() + " " + Language.skillpoints);
 						} catch (NullPointerException e) {
 							Messaging.sendMessage(sender, ChatColor.RED
-									+ "There is no skill with that name!");
+									+ Language.noSkillName);
 							return handled;
 						}
 					}
@@ -347,14 +347,14 @@ public class CMDrcs implements CommandExecutor {
 							try {
 								skill = SkillsConfig.getSingleSkill(id);
 							} catch (NullPointerException n) {
-								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that ID!");
+								Messaging.sendMessage(sender,ChatColor.RED + Language.noSkillID);
 								return handled;
 							}
 						} catch (NumberFormatException e) {
 							if (SkillsConfig.skillsList.contains(args[1])) {
 								skill = SkillsConfig.getSingleSkill(args[1]);
 							} else {
-								Messaging.sendMessage(sender,ChatColor.RED + "There is no skill with that Name!");
+								Messaging.sendMessage(sender,ChatColor.RED + Language.noSkillName);
 								return handled;
 							}
 						}
@@ -387,12 +387,12 @@ public class CMDrcs implements CommandExecutor {
 											+ " " + Language.currency + " " + Language.and + " " + Messaging.colorizeText(
 											"" + skill.getSkillpoints(),ChatColor.YELLOW) + " " + Language.skillpoints + " " + Language.deducted);
 								} else {
-									Messaging.sendMessage(sender, ChatColor.RED + "Group " + skill.getGroup() + " does not exist!");
+									Messaging.sendMessage(sender, ChatColor.RED + Language.group + skill.getGroup() + Language.notExist);
 								}
 							}
 						} catch (NullPointerException e) {
 							// TODO: create sentence in lang.yml
-							Messaging.sendMessage(sender, ChatColor.RED + "There is no skill with that name!");
+							Messaging.sendMessage(sender, ChatColor.RED + Language.noSkillName);
 							return handled;
 						}
 					}
@@ -442,8 +442,8 @@ public class CMDrcs implements CommandExecutor {
 
 								} else {
 									Messaging.sendMessage(sender, ChatColor.RED
-											+ "Group " + skill.getGroup()
-											+ " does not exist!");
+											+ Language.group + skill.getGroup()
+											+ Language.notExist);
 								}
 							}
 						} catch (NullPointerException e) {
@@ -560,6 +560,7 @@ public class CMDrcs implements CommandExecutor {
 						RCConfig.load();
 						SkillsConfig.load();
 						Language.load();
+						//TODO Maybe change this also to Language.reload
 						Messaging.sendMessage(sender,Messaging.colorizeText(RCSkills.name,ChatColor.GREEN) + " has been reloaded.");
 					}
 				}

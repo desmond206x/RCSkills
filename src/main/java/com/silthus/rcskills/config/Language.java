@@ -60,6 +60,8 @@ public class Language {
 	public static String youNeedLevel;
 	public static String forThatSkill;
 	public static String youJustBought;
+	public static String group;
+	public static String notExist;
 	// Reset config
 	public static String noResetSkills;
 	public static String resetWarning;
@@ -71,6 +73,7 @@ public class Language {
 	public static String allSkillsReset;
 	public static String allSkillsResetFrom;
 	public static String reseted;
+	public static String cantReset;
 	// Admin Config
 	public static String alreadyHasThisSkill;
 	public static String YouJustGotSkill;
@@ -173,13 +176,15 @@ public class Language {
 		Language.noSkills = file.getString("skills.noSkills");
 		Language.youAlreadyHaveThisSkill = file.getString("skills.youAlreadyHaveThisSkill");
 		Language.youDontHaveEnough = file.getString("skills.youDontHaveEnough");
+		Language.youOnlyHave = file.getString("skills.youOnlyHave");
 		Language.youHaveNow = file.getString("skills.youHaveNow");
 		Language.hasNow = file.getString("skills.hasNow");
 		Language.substracted = file.getString("skills.substracted");
 		Language.youNeedLevel = file.getString("skills.youNeedLevel");
 		Language.forThatSkill = file.getString("skills.forThatSkill");
 		Language.youJustBought = file.getString("skills.youJustBought");
-		Language.youOnlyHave = file.getString("skills.youOnlyHave");
+		Language.group = file.getString("skills.group");
+		Language.notExist = file.getString("skills.notExist");
 		// Reset config
 		Language.noResetSkills = file.getString("reset.noResetSkills");
 		Language.resetWarning = file.getString("reset.resetWarning");
@@ -191,6 +196,7 @@ public class Language {
 		Language.allSkillsReset = file.getString("reset.allSkillsReset");
 		Language.allSkillsResetFrom = file.getString("reset.allSkillsResetFrom");
 		Language.reseted = file.getString("reset.reseted");
+		Language.cantReset = file.getString("reset.cantReset");
 		// Admin Config
 		Language.alreadyHasThisSkill = file.getString("admin.alreadyHasThisSkill");
 		Language.YouJustGotSkill = file.getString("admin.YouJustGotSkill");

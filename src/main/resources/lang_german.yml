@@ -43,6 +43,8 @@ skills:
     youNeedLevel: 'Du benötigst Level'
     forThatSkill: 'für diesen Skill'
     youJustBought: 'Du hast soeben gekauft'
+    group: 'Gruppe'
+    notExist: 'existiert nicht!'
 reset:
     noResetSkills: 'Du hast keine Skills die du zurücksetzen kannst'
     resetWarning: 'Bist du dir sicher, dass du deine Skills zurücksetzen möchtest'
@@ -53,7 +55,9 @@ reset:
     confirm: 'Gebe /rcs reset confirm ein um alle deine Skills zurückzusetzen.'
     allSkillsReset: 'Alle deine Skills wurden zurückgesetzt und dir wurden'
     allSkillsResetFrom: 'Alle deine Skills wurden von'
+    # Use only for german or other language
     reseted: 'zurückgesetzt'
+    cantReset: 'Konnte Skill nicht zurücksetzen! Bereits entfernt?!'
 admin:
     alreadyHasThisSkill: 'hat diesen Skill bereits'
     YouJustGotSkill: 'Du hast soeben den Skill'
